@@ -1,0 +1,4 @@
+<APIProxy name="gcamf">
+  <!-- This is the root of the application -->
+  <Description>"gp-connect-appointments-management-fhir"</Description>
+</APIProxy>
