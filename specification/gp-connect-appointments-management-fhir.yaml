@@ -33,7 +33,7 @@ info:
 
     This API can be used by developers of clinical systems that support clinicians delivering direct care. It is not a patient-facing API.
 
-    Before you start development, read the [Appointment Management](https://developer.nhs.uk/apis/gpconnect-1-2-7/appointments.html) section of the GP Connect v1.2.7 specification, which includes Foundations, and the prerequisites listed below.
+    Before you start development, read the [Appointment Management](https://simplifier.net/guide/pfs-appointments?version=current) section of the GP Connect v1.2.7 specification, which includes Foundations, and the prerequisites listed below.
 
     ## Prerequisites
 
@@ -113,13 +113,12 @@ info:
     The SSP checks data-sharing agreements to ensure that the consumer system is authorised to communicate with the provider system.
     ## Environments and testing
 
-    Environment                   URL
+    | Environment   |URL    |
+    |---|---|
+    |Internet-facing demonstrator   | [https://orange.testlab.nhs.uk/](https://orange.testlab.nhs.uk/)  |
+    | Opentest environment  |  [https://orange.testlab.nhs.uk/opentest.html](https://orange.testlab.nhs.uk/opentest.html) |
+    | Integration (INT)	  |Provided during onboarding process   |
 
-    Internet-facing demonstrator	https://orange.testlab.nhs.uk/
-
-    Opentest environment	        https://orange.testlab.nhs.uk/opentest.html
-
-    Integration (INT)	            Provided during onboarding process
 
     ## Onboarding
 
