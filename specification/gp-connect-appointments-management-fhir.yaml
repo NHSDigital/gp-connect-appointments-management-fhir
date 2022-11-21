@@ -6,118 +6,98 @@ info:
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview
-    Use this API to enable patients to book and manage patient appointments held in any of the principal GP practice systems.
+
+    Use this API to book and manage patient appointments at their GP practice.
 
     You can:
+     - retrieve a patient’s appointments
+     - search for free slots
+     - read an appointment
+     - book an appointment
+     - cancel an appointment
 
-    * retrieve a patient’s appointments
-    * search for free slots
-    * read an appointment
-    * book an appointment
-    * cancel an appointment
+    You cannot:
+     - amend a patient's appointments
+     - re-schedule a patient's appointments (This must be done by cancelling and re-booking)
 
-    For example:
+    The end user must be a patient who is:
+     - registered with the GP practice
+     - registered with NHS login to P9
 
-    * A patient can book, view, or cancel their own appointments.
+    ## For Example:
 
-    Note: You need to use this API in conjunction with the APIM API which will handle
+    A patient can add, remove or retrive their appointments
 
-    * Getting the patient details
-    * Determining the patient's GP
-    * Security protocols
-
-    Add a fully fledged description here with markdown syntax.
-    For help completing the content of your API spec, see our guidance on the minimum standard (bronze) details
-    to include [here](https://nhsd-confluence.digital.nhs.uk/display/APM/Writing+a+bronze+API+cover+page). You should also base your content on our exemplar API - [PDS FHIR](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir).
     ## Who can use this API
 
-    This API can be used by developers of clinical systems that support clinicians delivering direct care. It is not a patient-facing API.
-
-    Before you start development, read the [Appointment Management](https://simplifier.net/guide/pfs-appointments?version=current) section of the GP Connect v1.2.7 specification, which includes Foundations, and the prerequisites listed below.
+    This API can be used by developers of clinical systems that support clinicians delivering direct care. It is a patient-facing API.
 
     ## Prerequisites
-
-    Technical
-
-    You must:
-
-    * have access to the Health and Social Care Network (HSCN)
-
-    * be Personal Demographics Service (PDS) compliant or capable of performing a PDS search via NHS Digital or a third-party provider
 
     Information governance (IG)
 
     You must:
 
-    * be compliant with the GP Connect Direct Care API Information Governance Model
-
-    * manage access to your system locally using local role-based access control (RBAC). This does not need to be compliant with the national RBAC model and GP Connect products do not require smartcards to control access, though they can be used if already implementedbe using the GP Connect APIs for direct care purposes for NHS patients in England
+    be compliant with the GP Connect Direct Care API Information Governance Model
+    manage access to your system locally using local role-based access control (RBAC). This does not need to be compliant with the national RBAC model and GP Connect products do not require smartcards to control access, though they can be used if already implementedbe using the GP Connect APIs for direct care purposes for NHS patients in England
 
     Clinical safety
 
     You must:
 
-    * have a clinical safety officer (CSO) who is responsible for DCB0129 and, if necessary, DCB0160. For more on clinical risk management, visit Clinical risk management standards
+    - have a clinical safety officer (CSO) who is responsible for DCB0129 and, if necessary, DCB0160. For more on clinical risk management, visit Clinical risk management standards.
 
-      If you are confident that you can meet the prerequisites, contact us to express your interest. See 'Onboarding' below.
+    If you are confident that you can meet the prerequisites, contact us to express your interest. See 'Onboarding' below.
 
     ## Related APIs
 
-    The following APIs are related to this API:
+      The following APIs are related to this API:
 
-    * Personal Demographics Service - FHIR API  – use this API to to look up the registered GP for the patient
-    * Spine Directory Service - FHIR API  – access accredited system information and messaging endpoint details
+      - GP Connect access record API - retrieve a patient's medical record from the GP practice systems.
+      - GP Connect prescriptions management API - manage a patient's prescriptions as held by the GP practice systems
+      - GP Connect User Permissions API - manage a patient's permissions to access the medical record and services they can access at their GP practice.
 
     ## API status and roadmap
 
     This API (v1.0) is in [development, alpha](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
     ## Service level
+
     This API is a silver service, meaning it is operational 24 x 7 x 365 but only supported during business hours (8am to 6pm), Monday to Friday excluding bank holidays.
 
     For more details, see service levels.
+
     ## Technology
+
     This API is a FHIR API.
 
     It sends a FHIR STU3 payload over a Spine Server Proxy (SSP) transport.
 
     For more details, see FHIR.
-    ## Network access
-    You need a Health and Social Care Network (HSCN) connection to use this API.
 
-    For more details, see Network access for APIs.
+    ## Network access
+
+    This API is available on the internet.
+
+    For more details, see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).
+
     ## Security and authorisation
 
     ### Security
-    Access to the GP Connect APIs is controlled and protected by the Spine Secure Proxy (SSP), a forward HTTP proxy.
 
-    It provides a single security point for both authentication and authorisation for consuming systems. Additional responsibilities include auditing of requests, checking data sharing agreements and transaction logging.
+    This API is user-restricted, meaning an end user must be present and authenticated to use it.
 
-    All HTTP communications are secured using TLS MA. This includes both legs of the request, from consumer system to the proxy and then from the proxy to provider system.
+    ## The end user must be:
 
-    ### Authorisation
-    Authorisation takes place in two locations:
+    - a patient
 
-    * the consumer system
-    * the SSP
+    - authenticated with NHS login to P9
 
-    The consumer system must have local RBAC in place and restrict GP Connect APIs to authorised users. With each request, a JSON Web Token (JWT) must be included with the following information:
+    The API uses Open ID Connect to authenticate the end user and OAuth 2.0 to authorise the calling system. It supports the following security pattern using NHS login:
 
-    * details of users, including role
-    * where smartcards are used in the consumer system, including SDS user and role IDs
-    * details of the consumer system
-    * details of the consumer’s organisation, including ODS code
-
-    The information in the JWT is retained for audit purposes.
-
-    The SSP checks data-sharing agreements to ensure that the consumer system is authorised to communicate with the provider system.
     ## Environments and testing
 
-    | Environment   |URL    |
-    |---|---|
-    |Internet-facing demonstrator   | [https://orange.testlab.nhs.uk/](https://orange.testlab.nhs.uk/)  |
-    | Opentest environment  |  [https://orange.testlab.nhs.uk/opentest.html](https://orange.testlab.nhs.uk/opentest.html) |
-    | Integration (INT)	  |Provided during onboarding process   |
+    | Environment   |URL    |\n|---|---|\n|Internet-facing demonstrator   | [https://orange.testlab.nhs.uk/](https://orange.testlab.nhs.uk/)  |\n| Opentest environment  |  [https://orange.testlab.nhs.uk/opentest.html](https://orange.testlab.nhs.uk/opentest.html) |\n| Integration (INT)\t  |Provided during onboarding process   |
 
 
     ## Onboarding
@@ -130,13 +110,12 @@ info:
 
     Your use case should include the following information as a minimum:
 
-    * the business problem you are intending to solve using GP Connect
-    * how GP Connect will be used in practice to benefit patients and staff
-    * which of the GP Connect products you will use to benefit patients and staff
-    * any end user organisations you are currently working with
-    * who your clinical safety officer is and, where available, your clinical risk management process documentation
-
-    Once we receive your use case, we'll respond within 14 days.
+    - the business problem you are intending to solve using GP wConnect
+    - how GP Connect will be used in practice to benefit patients and staff
+    - which of the GP Connect products you will use to benefit patients and staff
+    - any end user organisations you are currently working with
+    - who your clinical safety officer is and, where available, your clinical risk management process documentation
+    - Once we receive your use case, we'll respond within 14 days.
 
     ## Consumer assurance process
 
