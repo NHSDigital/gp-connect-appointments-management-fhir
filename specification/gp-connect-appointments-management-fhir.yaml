@@ -105,8 +105,55 @@ info:
 
     | Environment   |URL    |\n|---|---|\n|Internet-facing demonstrator   | [https://orange.testlab.nhs.uk/](https://orange.testlab.nhs.uk/)  |\n| Opentest environment  |  [https://orange.testlab.nhs.uk/opentest.html](https://orange.testlab.nhs.uk/opentest.html) |\n| Integration (INT)\t  |Provided during onboarding process   |
 
+    ## Environments and testing
+
+    | Purpose          | URL                                                   |
+    | -------          | ---                                                   |
+    | Sandbox          | `https://sandbox.api.service.nhs.uk/appointments` |
+    | Integration test | Not yet available                                     |
+    | Production       | Not yet available                                     |
+
+    ### Sandbox testing
+
+    Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing):
+
+    - is for early developer testing
+    - only covers a limited set of scenarios
+    - is stateless, so it does not store data
+    - is open access, so does not allow you to test authorisation
+
+    For more details on sandbox testing, or to try out the sandbox using our
+    "Try this API\" feature, see the documentation for each endpoint.
+
+    ### Integration testing (not yet available)
+
+    Our [integration test environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing):
+
+    - is for formal integration testing
+    - is stateful, so it does persist data
+    - includes authorisation
+
+    For more details see [integration testing with our RESTful APIs](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing-with-our-restful-apis).
 
     ## Onboarding
+
+    We are hoping to make the assurance process as lightweight and as
+    self-service as possible.
+
+    ## Errors
+
+    We use standard HTTP status codes to show whether an API request succeeded
+    or not. They are usually in the range:
+
+    - 200 to 299 if it succeeded, including code 202 if it was accepted by an
+    API that needs to wait for further action
+
+    - 400 to 499 if it failed because of a client error by your application
+
+    - 500 to 599 if it failed because of an error on our server
+
+    Errors specific to each API are shown in the Endpoints section, under
+    Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
 
     ## Expressing an interest
 
@@ -139,16 +186,265 @@ info:
     For details on the general structure of the interactions, see [Fhir](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#fhir)
 
   contact:
-    name: 'gp-connect-appointments-management-fhir API Support'
-    url: 'https://digital.nhs.uk/developer/help-and-support'
+    name: gp-connect-appointments-management-fhir API Support
+    url: https://digital.nhs.uk/developer/help-and-support
     email: api.management@nhs.net
 servers:
-  - url: 'https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir'
-    description: Sandbox environment.
-  - url: 'https://int.api.service.nhs.uk/gp-connect-appointments-management-fhir'
-    description: Integration test environment.
-  - url: 'https://api.service.nhs.uk/gp-connect-appointments-management-fhir'
-    description: Production environment.
-paths: {}
-components:
-  schemas: {}
+  - description: Sandbox environment.
+    url: https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir
+  - description: Integration test environment.
+    url: https://int.api.service.nhs.uk/gp-connect-appointments-management-fhir
+  - description: Production environment.
+    url: https://api.service.nhs.uk/gp-connect-appointments-management-fhir
+paths:
+  /Patient/{id}/Appointment:
+    get:
+      tags:
+        - Appointment Management
+      summary: Read a patient's appointments
+      parameters:
+        - name: id
+          in: path
+          description: Patient logical identifier (Nhs Number)
+          required: true
+          schema:
+            type: string
+          example: '2'
+        - name: start
+          in: query
+          description: Appointment start/end dates
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+            default: '["ge2020-05-09","le2020-05-19"]'
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+  /Slot:
+    get:
+      tags:
+        - Appointment Management
+      summary: Search for free slots
+      parameters:
+        - name: start
+          in: query
+          description: Slot start date/time
+          required: true
+          schema:
+            type: string
+          example: ge2020-05-09
+        - name: end
+          in: query
+          description: Slot end date/time
+          required: true
+          schema:
+            type: string
+          example: le2020-05-10
+        - name: status
+          in: query
+          description: Slot status
+          required: true
+          schema:
+            type: string
+            default: free
+            enum:
+              - free
+        - name: _include
+          in: query
+          description: Include
+          required: true
+          schema:
+            type: string
+            default: Slot:schedule
+            enum:
+              - Slot:schedule
+        - name: _include:recurse
+          in: query
+          description: Include recurse
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - Schedule:actor:Practitioner
+                - Schedule:actor:Location
+                - Location:managingOrganization
+        - name: searchFilter
+          in: query
+          description: Search filter
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - >-
+                  https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1|gp-practice
+                - >-
+                  https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1|urgent-care
+                - https://fhir.nhs.uk/Id/ods-organization-code|A20047
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+  /Appointment:
+    post:
+      tags:
+        - Appointment Management
+      summary: Book an appointment
+      requestBody:
+        description: Appointment
+        content:
+          application/fhir+json:
+            schema:
+              type: object
+              example:
+                resourceType: Appointment
+                meta:
+                  profile:
+                    - >-
+                      https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-Appointment-1
+                contained:
+                  - resourceType: Organization
+                    id: '1'
+                    meta:
+                      profile:
+                        - >-
+                          https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1
+                    identifier:
+                      - system: https://fhir.nhs.uk/Id/ods-organization-code
+                        value: GPC001
+                    name: GP Connect Demonstrator
+                    telecom:
+                      - system: phone
+                        value: 0113 258 2569
+                status: booked
+                created: '2018-11-14T14:31:55.000Z'
+                description: A test appointment booked through Interactive Swagger API
+                start: '2018-11-16T10:00:00.000Z'
+                end: '2018-11-16T10:10:00.000Z'
+                slot:
+                  - reference: Slot/1
+                participant:
+                  - actor:
+                      reference: Patient/2
+                    status: accepted
+                  - actor:
+                      reference: Location/1
+                    status: accepted
+                extension:
+                  - url: >-
+                      https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-BookingOrganisation-1
+                    valueReference:
+                      reference: '#1'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+      x-codegen-request-body-name: body
+  /Appointment/{id}:
+    get:
+      tags:
+        - Appointment Management
+      summary: Read an appointment
+      parameters:
+        - name: id
+          in: path
+          description: Appointment logical identifier
+          required: true
+          schema:
+            type: string
+          example: '1'
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+    put:
+      tags:
+        - Appointment Management
+      summary: Cancel an appointment
+      parameters:
+        - name: id
+          in: path
+          description: Appointment logical identifier
+          required: true
+          schema:
+            type: string
+          example: '1'
+      requestBody:
+        description: Appointment
+        content:
+          application/fhir+json:
+            schema:
+              type: object
+              example:
+                resourceType: Appointment
+                id: '3'
+                meta:
+                  profile:
+                    - >-
+                      https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-Appointment-1
+                contained:
+                  - resourceType: Organization
+                    id: '1'
+                    meta:
+                      profile:
+                        - >-
+                          https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1
+                    identifier:
+                      - system: https://fhir.nhs.uk/Id/ods-organization-code
+                        value: GPC001
+                    name: GP Connect Demonstrator
+                    telecom:
+                      - system: phone
+                        value: 0113 258 2569
+                status: booked
+                created: '2018-11-14T14:31:55.000Z'
+                description: A test appointment booked through Interactive Swagger API
+                start: '2018-11-16T10:00:00.000Z'
+                end: '2018-11-16T10:10:00.000Z'
+                slot:
+                  - reference: Slot/1
+                participant:
+                  - actor:
+                      reference: Patient/2
+                    status: accepted
+                  - actor:
+                      reference: Location/1
+                    status: accepted
+                extension:
+                  - url: >-
+                      https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-BookingOrganisation-1
+                    valueReference:
+                      reference: '#1'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+      x-codegen-request-body-name: body
+components: {}
