@@ -18,28 +18,36 @@ info:
 
     You cannot:
      - amend a patient's appointments
-     - re-schedule a patient's appointments (This must be done by cancelling and re-booking)
+     - re-schedule a patient's appointments (this must be done by cancelling and re-booking)
 
-    The end user must be a patient who is:
+    To use this API, the end user must be a patient who is:
      - registered with the GP practice
      - registered with NHS login to P9
-
-    ## For Example:
-
-    A patient can add, remove or retrive their appointments
 
     ## Who can use this API
 
     This API can be used by developers of clinical systems that support clinicians delivering direct care. It is a patient-facing API.
 
+    This API:
+
+    - is only for use by patient-facing applications
+    - is only for non-clinical use
+    - can only be used where there is a legal basis to do so
+
+    Make sure you have a valid use case before you go too far with your development. To do this, contact us.
+
+    You must do this before you can go live (see `Onboarding` below).
+
     ## Prerequisites
 
     Information governance (IG)
 
-    You must:
+     You must:
 
-    be compliant with the GP Connect Direct Care API Information Governance Model
-    manage access to your system locally using local role-based access control (RBAC). This does not need to be compliant with the national RBAC model and GP Connect products do not require smartcards to control access, though they can be used if already implementedbe using the GP Connect APIs for direct care purposes for NHS patients in England
+     - be compliant with the GP Connect Direct Care API Information Governance Model
+
+     - manage access to your system locally using local role-based access control (RBAC). This does not need to be compliant with the national RBAC model and GP Connect products do not require smartcards to control access, though they can be used if already implementedbe using the GP Connect APIs for direct care purposes for NHS patients in England
+
 
     Clinical safety
 
@@ -83,9 +91,7 @@ info:
 
     ## Security and authorisation
 
-    ### Security
-
-    This API is user-restricted, meaning an end user must be present and authenticated to use it.
+    This API is [user-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis), meaning an end user must be present and authenticated to use it.
 
     ## The end user must be:
 
@@ -115,7 +121,8 @@ info:
     - which of the GP Connect products you will use to benefit patients and staff
     - any end user organisations you are currently working with
     - who your clinical safety officer is and, where available, your clinical risk management process documentation
-    - Once we receive your use case, we'll respond within 14 days.
+
+    Once we receive your use case, we'll respond within 14 days.
 
     ## Consumer assurance process
 
