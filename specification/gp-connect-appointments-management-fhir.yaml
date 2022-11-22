@@ -91,7 +91,7 @@ info:
 
     - a patient
 
-    - authenticated with NHS login to P9
+    - authenticated with NHS login to P9 identity verification level
 
     The API uses Open ID Connect to authenticate the end user and OAuth 2.0 to authorise the calling system. It supports the following security pattern using NHS login:
     
