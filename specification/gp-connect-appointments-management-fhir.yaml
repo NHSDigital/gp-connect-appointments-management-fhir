@@ -6,121 +6,150 @@ info:
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview
-    Use this API to enable patients to book and manage patient appointments held in any of the principal GP practice systems.
+
+    Use this API to book and manage patient appointments at their GP practice.
 
     You can:
+     - retrieve a patient’s appointments
+     - search for free slots
+     - read an appointment
+     - book an appointment
+     - cancel an appointment
 
-    * retrieve a patient’s appointments
-    * search for free slots
-    * read an appointment
-    * book an appointment
-    * cancel an appointment
+    You cannot:
+     - amend a patient's appointments
+     - re-schedule a patient's appointments (this must be done by cancelling and re-booking)
 
-    For example:
+    To use this API, the end user must be a patient who is:
+     - registered with the GP practice
+     - registered with NHS login to P9 identity verification level
 
-    * A patient can book, view, or cancel their own appointments.
-
-    Note: You need to use this API in conjunction with the APIM API which will handle
-
-    * Getting the patient details
-    * Determining the patient's GP
-    * Security protocols
-
-    Add a fully fledged description here with markdown syntax.
-    For help completing the content of your API spec, see our guidance on the minimum standard (bronze) details
-    to include [here](https://nhsd-confluence.digital.nhs.uk/display/APM/Writing+a+bronze+API+cover+page). You should also base your content on our exemplar API - [PDS FHIR](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir).
     ## Who can use this API
 
-    This API can be used by developers of clinical systems that support clinicians delivering direct care. It is not a patient-facing API.
+    This API can be used by developers of clinical systems that support clinicians delivering direct care. It is a patient-facing API.
 
-    Before you start development, read the [Appointment Management](https://simplifier.net/guide/pfs-appointments?version=current) section of the GP Connect v1.2.7 specification, which includes Foundations, and the prerequisites listed below.
+    This API:
+
+    - is only for use by patient-facing applications
+    - is only for non-clinical use
+    - can only be used where there is a legal basis to do so
+
+    Make sure you have a valid use case before you go too far with your development. To do this, contact us.
+
+    You must do this before you can go live (see `Onboarding` below).
 
     ## Prerequisites
 
-    Technical
-
-    You must:
-
-    * have access to the Health and Social Care Network (HSCN)
-
-    * be Personal Demographics Service (PDS) compliant or capable of performing a PDS search via NHS Digital or a third-party provider
-
     Information governance (IG)
 
-    You must:
+     You must:
 
-    * be compliant with the GP Connect Direct Care API Information Governance Model
+     - be compliant with the GP Connect Direct Care API Information Governance Model
 
-    * manage access to your system locally using local role-based access control (RBAC). This does not need to be compliant with the national RBAC model and GP Connect products do not require smartcards to control access, though they can be used if already implementedbe using the GP Connect APIs for direct care purposes for NHS patients in England
+     - manage access to your system locally using local role-based access control (RBAC). This does not need to be compliant with the national RBAC model and GP Connect products do not require smartcards to control access, though they can be used if already implementedbe using the GP Connect APIs for direct care purposes for NHS patients in England
+
 
     Clinical safety
 
     You must:
 
-    * have a clinical safety officer (CSO) who is responsible for DCB0129 and, if necessary, DCB0160. For more on clinical risk management, visit Clinical risk management standards
+    - have a clinical safety officer (CSO) who is responsible for DCB0129 and, if necessary, DCB0160. For more on clinical risk management, visit Clinical risk management standards.
 
-      If you are confident that you can meet the prerequisites, contact us to express your interest. See 'Onboarding' below.
+    If you are confident that you can meet the prerequisites, contact us to express your interest. See 'Onboarding' below.
 
     ## Related APIs
 
-    The following APIs are related to this API:
+      The following APIs are related to this API:
 
-    * Personal Demographics Service - FHIR API  – use this API to to look up the registered GP for the patient
-    * Spine Directory Service - FHIR API  – access accredited system information and messaging endpoint details
+      - GP Connect access record API - retrieve a patient's medical record from the GP practice systems.
+      - GP Connect prescriptions management API - manage a patient's prescriptions as held by the GP practice systems
+      - GP Connect User Permissions API - manage a patient's permissions to access the medical record and services they can access at their GP practice.
 
     ## API status and roadmap
 
     This API (v1.0) is in [development, alpha](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
     ## Service level
+
     This API is a silver service, meaning it is operational 24 x 7 x 365 but only supported during business hours (8am to 6pm), Monday to Friday excluding bank holidays.
 
     For more details, see service levels.
+
     ## Technology
+
     This API is a FHIR API.
 
     It sends a FHIR STU3 payload over a Spine Server Proxy (SSP) transport.
 
     For more details, see FHIR.
-    ## Network access
-    You need a Health and Social Care Network (HSCN) connection to use this API.
 
-    For more details, see Network access for APIs.
+    ## Network access
+
+    This API is available on the internet.
+
+    For more details, see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).
+
     ## Security and authorisation
 
-    ### Security
-    Access to the GP Connect APIs is controlled and protected by the Spine Secure Proxy (SSP), a forward HTTP proxy.
+    This API is [user-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis), meaning an end user must be present and authenticated to use it.
 
-    It provides a single security point for both authentication and authorisation for consuming systems. Additional responsibilities include auditing of requests, checking data sharing agreements and transaction logging.
+    ## The end user must be:
 
-    All HTTP communications are secured using TLS MA. This includes both legs of the request, from consumer system to the proxy and then from the proxy to provider system.
+    - a patient
 
-    ### Authorisation
-    Authorisation takes place in two locations:
+    - authenticated with NHS login to P9 identity verification level
 
-    * the consumer system
-    * the SSP
+    The API uses Open ID Connect to authenticate the end user and OAuth 2.0 to authorise the calling system. It supports the following security pattern using NHS login:
 
-    The consumer system must have local RBAC in place and restrict GP Connect APIs to authorised users. With each request, a JSON Web Token (JWT) must be included with the following information:
-
-    * details of users, including role
-    * where smartcards are used in the consumer system, including SDS user and role IDs
-    * details of the consumer system
-    * details of the consumer’s organisation, including ODS code
-
-    The information in the JWT is retained for audit purposes.
-
-    The SSP checks data-sharing agreements to ensure that the consumer system is authorised to communicate with the provider system.
     ## Environments and testing
 
-    | Environment   |URL    |
-    |---|---|
-    |Internet-facing demonstrator   | [https://orange.testlab.nhs.uk/](https://orange.testlab.nhs.uk/)  |
-    | Opentest environment  |  [https://orange.testlab.nhs.uk/opentest.html](https://orange.testlab.nhs.uk/opentest.html) |
-    | Integration (INT)	  |Provided during onboarding process   |
+    | Purpose          | URL                                                   |
+    | -------          | ---                                                   |
+    | Sandbox          | `https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir` |
+    | Integration test | Not yet available                                     |
+    | Production       | Not yet available                                     |
 
+    ### Sandbox testing
+
+    Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing):
+
+    - is for early developer testing
+    - only covers a limited set of scenarios
+    - is stateless, so it does not store data
+    - is open access, so does not allow you to test authorisation
+
+    For more details on sandbox testing, or to try out the sandbox using our
+    "Try this API\" feature, see the documentation for each endpoint.
+
+    ### Integration testing (not yet available)
+
+    Our [integration test environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing):
+
+    - is for formal integration testing
+    - is stateful, so it does persist data
+    - includes authorisation
+
+    For more details see [integration testing with our RESTful APIs](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing-with-our-restful-apis).
 
     ## Onboarding
+
+    We are hoping to make the assurance process as lightweight and as
+    self-service as possible.
+
+    ## Errors
+
+    We use standard HTTP status codes to show whether an API request succeeded
+    or not. They are usually in the range:
+
+    - 200 to 299 if it succeeded, including code 202 if it was accepted by an
+    API that needs to wait for further action
+
+    - 400 to 499 if it failed because of a client error by your application
+
+    - 500 to 599 if it failed because of an error on our server
+
+    Errors specific to each API are shown in the Endpoints section, under
+    Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
 
     ## Expressing an interest
 
@@ -130,11 +159,11 @@ info:
 
     Your use case should include the following information as a minimum:
 
-    * the business problem you are intending to solve using GP Connect
-    * how GP Connect will be used in practice to benefit patients and staff
-    * which of the GP Connect products you will use to benefit patients and staff
-    * any end user organisations you are currently working with
-    * who your clinical safety officer is and, where available, your clinical risk management process documentation
+    - the business problem you are intending to solve using GP wConnect
+    - how GP Connect will be used in practice to benefit patients and staff
+    - which of the GP Connect products you will use to benefit patients and staff
+    - any end user organisations you are currently working with
+    - who your clinical safety officer is and, where available, your clinical risk management process documentation
 
     Once we receive your use case, we'll respond within 14 days.
 
@@ -146,17 +175,271 @@ info:
 
     Start your development work within 6 months of use case approval. If you miss this date, a review or new submission of the use case will be required. Changes or additional development will also require a review or new use case submission.
 
+    ## Interactions
+
+    For a full list of interactions for this API, see [pfs-appointments](https://simplifier.net/guide/pfs-appointments?version=current)
+
+    For details on the general structure of the interactions, see [Fhir](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#fhir)
+
   contact:
-    name: 'gp-connect-appointments-management-fhir API Support'
-    url: 'https://digital.nhs.uk/developer/help-and-support'
+    name: gp-connect-appointments-management-fhir API Support
+    url: https://digital.nhs.uk/developer/help-and-support
     email: api.management@nhs.net
 servers:
-  - url: 'https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir'
-    description: Sandbox environment.
-  - url: 'https://int.api.service.nhs.uk/gp-connect-appointments-management-fhir'
-    description: Integration test environment.
-  - url: 'https://api.service.nhs.uk/gp-connect-appointments-management-fhir'
-    description: Production environment.
-paths: {}
-components:
-  schemas: {}
+  - description: Sandbox environment.
+    url: https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir
+  - description: Integration test environment.
+    url: https://int.api.service.nhs.uk/gp-connect-appointments-management-fhir
+  - description: Production environment.
+    url: https://api.service.nhs.uk/gp-connect-appointments-management-fhir
+paths:
+  /Patient/{id}/Appointment:
+    get:
+      tags:
+        - Appointment Management
+      summary: Read a patient's appointments
+      parameters:
+        - name: id
+          in: path
+          description: Patient logical identifier (Nhs Number)
+          required: true
+          schema:
+            type: string
+          example: '2'
+        - name: start
+          in: query
+          description: Appointment start/end dates
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+  /Slot:
+    get:
+      tags:
+        - Appointment Management
+      summary: Search for free slots
+      parameters:
+        - name: start
+          in: query
+          description: Slot start date/time
+          required: true
+          schema:
+            type: string
+          example: ge2020-05-09
+        - name: end
+          in: query
+          description: Slot end date/time
+          required: true
+          schema:
+            type: string
+          example: le2020-05-10
+        - name: status
+          in: query
+          description: Slot status
+          required: true
+          schema:
+            type: string
+            default: free
+            enum:
+              - free
+        - name: _include
+          in: query
+          description: Include
+          required: true
+          schema:
+            type: string
+            default: Slot:schedule
+            enum:
+              - Slot:schedule
+        - name: _include:recurse
+          in: query
+          description: Include recurse
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - Schedule:actor:Practitioner
+                - Schedule:actor:Location
+                - Location:managingOrganization
+        - name: searchFilter
+          in: query
+          description: Search filter
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - >-
+                  https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1|gp-practice
+                - >-
+                  https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1|urgent-care
+                - https://fhir.nhs.uk/Id/ods-organization-code|A20047
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+  /Appointment:
+    post:
+      tags:
+        - Appointment Management
+      summary: Book an appointment
+      requestBody:
+        description: Appointment
+        content:
+          application/fhir+json:
+            schema:
+              type: object
+              example:
+                resourceType: Appointment
+                meta:
+                  profile:
+                    - >-
+                      https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-Appointment-1
+                contained:
+                  - resourceType: Organization
+                    id: '1'
+                    meta:
+                      profile:
+                        - >-
+                          https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1
+                    identifier:
+                      - system: https://fhir.nhs.uk/Id/ods-organization-code
+                        value: GPC001
+                    name: GP Connect Demonstrator
+                    telecom:
+                      - system: phone
+                        value: 0113 258 2569
+                status: booked
+                created: '2018-11-14T14:31:55.000Z'
+                description: A test appointment booked through Interactive Swagger API
+                start: '2018-11-16T10:00:00.000Z'
+                end: '2018-11-16T10:10:00.000Z'
+                slot:
+                  - reference: Slot/1
+                participant:
+                  - actor:
+                      reference: Patient/2
+                    status: accepted
+                  - actor:
+                      reference: Location/1
+                    status: accepted
+                extension:
+                  - url: >-
+                      https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-BookingOrganisation-1
+                    valueReference:
+                      reference: '#1'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+      x-codegen-request-body-name: body
+  /Appointment/{id}:
+    get:
+      tags:
+        - Appointment Management
+      summary: Read an appointment
+      parameters:
+        - name: id
+          in: path
+          description: Appointment logical identifier
+          required: true
+          schema:
+            type: string
+          example: '1'
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+    put:
+      tags:
+        - Appointment Management
+      summary: Cancel an appointment
+      parameters:
+        - name: id
+          in: path
+          description: Appointment logical identifier
+          required: true
+          schema:
+            type: string
+          example: '1'
+      requestBody:
+        description: Appointment
+        content:
+          application/fhir+json:
+            schema:
+              type: object
+              example:
+                resourceType: Appointment
+                id: '3'
+                meta:
+                  profile:
+                    - >-
+                      https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-Appointment-1
+                contained:
+                  - resourceType: Organization
+                    id: '1'
+                    meta:
+                      profile:
+                        - >-
+                          https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1
+                    identifier:
+                      - system: https://fhir.nhs.uk/Id/ods-organization-code
+                        value: GPC001
+                    name: GP Connect Demonstrator
+                    telecom:
+                      - system: phone
+                        value: 0113 258 2569
+                status: booked
+                created: '2018-11-14T14:31:55.000Z'
+                description: A test appointment booked through Interactive Swagger API
+                start: '2018-11-16T10:00:00.000Z'
+                end: '2018-11-16T10:10:00.000Z'
+                slot:
+                  - reference: Slot/1
+                participant:
+                  - actor:
+                      reference: Patient/2
+                    status: accepted
+                  - actor:
+                      reference: Location/1
+                    status: accepted
+                extension:
+                  - url: >-
+                      https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-BookingOrganisation-1
+                    valueReference:
+                      reference: '#1'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+      x-codegen-request-body-name: body
+components: {}
