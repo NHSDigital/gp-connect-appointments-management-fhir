@@ -97,7 +97,7 @@ info:
 
     - a patient
 
-    - authenticated with NHS login to P9 identity verification level
+    - authenticated with NHS login to P9 identity verification level 
 
     The API uses Open ID Connect to authenticate the end user and OAuth 2.0 to authorise the calling system. It supports the following security pattern using NHS login:
 
@@ -131,12 +131,6 @@ info:
     ## Consumer assurance process with 4 gates
 
     Start your development work within 6 months of use case approval. If you miss this date, a review or new submission of the use case will be required. Changes or additional development will also require a review or new use case submission.
-
-    ## Interactions
-
-    For a full list of interactions for this API, see [pfs-appointments](https://simplifier.net/guide/pfs-appointments?version=current)
-
-    For details on the general structure of the interactions, see [Fhir](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#fhir)
 
   contact:
     name: 'gp-connect-appointments-management-fhir API Support'
