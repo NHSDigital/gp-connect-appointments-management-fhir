@@ -26,19 +26,19 @@ info:
 
     ## Who can use this API
 
-    This API can be used by developers of clinical systems that support clinicians delivering direct care. It is a patient-facing API.
+    This API can be used by developers of clinical systems. It is a patient-facing API.
 
     This API:
 
-    - is only for use by patient-facing applications
-    - is only for non-clinical use
+    - is only intended for use by patient-facing applications
+    - is only intended for non-clinical use
     - can only be used where there is a legal basis to do so
 
     Make sure you have a valid use case before you go too far with your development. To do this, contact us.
 
-    You must do this before you can go live (see `Onboarding` below).
+    You must do this before you can go live (see 'Onboarding' below).
 
-    ## Prerequisites
+    ### Prerequisites
 
     Information governance (IG)
 
@@ -61,19 +61,19 @@ info:
 
       The following APIs are related to this API:
 
-      - GP Connect access record API - retrieve a patient's medical record from the GP practice systems.
-      - GP Connect prescriptions management API - manage a patient's prescriptions as held by the GP practice systems
-      - GP Connect User Permissions API - manage a patient's permissions to access the medical record and services they can access at their GP practice.
+      - [GP Connect Structured Record API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-pfs-structured-record) - retrieve a patient's medical record from the GP practice systems.
+      - [GP Connect Prescriptions Management API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-pfs-prescriptions) - manage a patient's prescriptions as held by the GP practice systems
+      - [GP Connect User Permissions API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-pfs-user-management) - manage a patient's permissions to access the medical record and services they can access at their GP practice.
 
     ## API status and roadmap
 
-    This API (v1.0) is in [development, alpha](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
+    This API (v1.0) is in [development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
     ## Service level
 
     This API is a silver service, meaning it is operational 24 x 7 x 365 but only supported during business hours (8am to 6pm), Monday to Friday excluding bank holidays.
 
-    For more details, see service levels.
+    For more details, see [service levels](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#service-levels).
 
     ## Technology
 
@@ -81,7 +81,7 @@ info:
 
     It sends a FHIR STU3 payload over a Spine Server Proxy (SSP) transport.
 
-    For more details, see FHIR.
+    For more details, see [FHIR](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#fhir).
 
     ## Network access
 
@@ -93,7 +93,7 @@ info:
 
     This API is [user-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis), meaning an end user must be present and authenticated to use it.
 
-    ## The end user must be:
+    The end user must be:
 
     - a patient
 
@@ -131,11 +131,6 @@ info:
 
     For more details see [integration testing with our RESTful APIs](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing-with-our-restful-apis).
 
-    ## Onboarding
-
-    We are hoping to make the assurance process as lightweight and as
-    self-service as possible.
-
     ## Errors
 
     We use standard HTTP status codes to show whether an API request succeeded
@@ -151,7 +146,13 @@ info:
     Errors specific to each API are shown in the Endpoints section, under
     Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
 
-    ## Expressing an interest
+
+    ## Onboarding
+
+    We are hoping to make the assurance process as lightweight and as
+    self-service as possible.
+
+    ### Expressing an interest
 
     If you meet the prerequisites and have a product that can integrate with GP Connect, you should express an interest with us by submitting a use case.
 
@@ -167,11 +168,9 @@ info:
 
     Once we receive your use case, we'll respond within 14 days.
 
-    ## Consumer assurance process
+    ### Consumer assurance process
 
     Once we approve your use case, we support you through the assurance process to go live. We will discuss the assurance process and artefacts with you to help you understand our requirements.
-
-    ## Consumer assurance process with 4 gates
 
     Start your development work within 6 months of use case approval. If you miss this date, a review or new submission of the use case will be required. Changes or additional development will also require a review or new use case submission.
 
@@ -199,9 +198,106 @@ paths:
         - Appointment Management
       summary: Read a patient's appointments
       parameters:
+        - name: Ssp-TraceID
+          in: header
+          description: Consumer trace identifier
+          required: true
+          schema:
+            type: string
+          example: 09a01679-2564-0fb4-5129-aecc81ea2706
+        - name: Ssp-From
+          in: header
+          description: Consumer ASID
+          required: true
+          schema:
+            type: string
+          example: '200000000359'
+        - name: Ssp-To
+          in: header
+          description: Provider ASID
+          required: true
+          schema:
+            type: string
+          example: '918999198993'
+        - name: Ssp-InteractionID
+          in: header
+          description: SDS interaction identifier
+          required: true
+          schema:
+            type: string
+            default: >-
+              urn:nhs:names:services:gpconnect:fhir:rest:search:patient_appointments-1
+        - name: Authorization
+          in: header
+          description: Authorization header containing JWT
+          required: true
+          schema:
+            type: string
+            x-multiline: true
+          example: |-
+            {
+              "iss": "https://orange.testlab.nhs.uk/",
+              "sub": "1",
+              "aud": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/v1/fhir",
+              "exp": <<expiry>>,
+              "iat": <<issued_at>>,
+              "reason_for_request": "directcare",
+              "requested_scope": "patient/*.read",
+              "requesting_device": {
+                "resourceType": "Device",
+                "identifier": [
+                  {
+                    "system": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/Id/local-system-instance-id",
+                    "value": "gpcdemonstrator-1-orange"
+                  }
+                ],
+                "model": "GP Connect Demonstrator",
+                "version": "1.2.7"
+              },
+              "requesting_organization": {
+                "resourceType": "Organization",
+                "identifier": [
+                  {
+                    "system": "https://fhir.nhs.uk/Id/ods-organization-code",
+                    "value": "A11111"
+                  }
+                ],
+                "name": "Consumer organisation name"
+              },
+              "requesting_practitioner": {
+                "resourceType": "Practitioner",
+                "id": "1",
+                "identifier": [
+                  {
+                    "system": "https://fhir.nhs.uk/Id/sds-user-id",
+                    "value": "111111111111"
+                  },
+                  {
+                    "system": "https://fhir.nhs.uk/Id/sds-role-profile-id",
+                    "value": "22222222222222"
+                  },
+                  {
+                    "system": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/Id/local-user-id",
+                    "value": "1"
+                  }
+                ],
+                "name": [
+                  {
+                    "family": "Demonstrator",
+                    "given": [
+                      "GPConnect"
+                    ],
+                    "prefix": [
+                      "Dr"
+                    ]
+                  }
+                ]
+              }
+            }
+          x-multiline: true
         - name: id
           in: path
-          description: Patient logical identifier (Nhs Number)
+          description: Patient logical identifier
           required: true
           schema:
             type: string
@@ -216,6 +312,7 @@ paths:
             type: array
             items:
               type: string
+            default: ["ge2020-05-09","le2020-05-19"]
       responses:
         '200':
           description: OK
@@ -229,6 +326,102 @@ paths:
         - Appointment Management
       summary: Search for free slots
       parameters:
+        - name: Ssp-TraceID
+          in: header
+          description: Consumer trace identifier
+          required: true
+          schema:
+            type: string
+          example: 09a01679-2564-0fb4-5129-aecc81ea2706
+        - name: Ssp-From
+          in: header
+          description: Consumer ASID
+          required: true
+          schema:
+            type: string
+          example: '200000000359'
+        - name: Ssp-To
+          in: header
+          description: Provider ASID
+          required: true
+          schema:
+            type: string
+          example: '918999198993'
+        - name: Ssp-InteractionID
+          in: header
+          description: SDS interaction identifier
+          required: true
+          schema:
+            type: string
+            default: urn:nhs:names:services:gpconnect:fhir:rest:search:slot-1
+        - name: Authorization
+          in: header
+          description: Authorization header containing JWT
+          required: true
+          schema:
+            type: string
+            x-multiline: true
+          example: |-
+            {
+              "iss": "https://orange.testlab.nhs.uk/",
+              "sub": "1",
+              "aud": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/v1/fhir",
+              "exp": <<expiry>>,
+              "iat": <<issued_at>>,
+              "reason_for_request": "directcare",
+              "requested_scope": "organization/*.read",
+              "requesting_device": {
+                "resourceType": "Device",
+                "identifier": [
+                  {
+                    "system": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/Id/local-system-instance-id",
+                    "value": "gpcdemonstrator-1-orange"
+                  }
+                ],
+                "model": "GP Connect Demonstrator",
+                "version": "1.2.7"
+              },
+              "requesting_organization": {
+                "resourceType": "Organization",
+                "identifier": [
+                  {
+                    "system": "https://fhir.nhs.uk/Id/ods-organization-code",
+                    "value": "A11111"
+                  }
+                ],
+                "name": "Consumer organisation name"
+              },
+              "requesting_practitioner": {
+                "resourceType": "Practitioner",
+                "id": "1",
+                "identifier": [
+                  {
+                    "system": "https://fhir.nhs.uk/Id/sds-user-id",
+                    "value": "111111111111"
+                  },
+                  {
+                    "system": "https://fhir.nhs.uk/Id/sds-role-profile-id",
+                    "value": "22222222222222"
+                  },
+                  {
+                    "system": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/Id/local-user-id",
+                    "value": "1"
+                  }
+                ],
+                "name": [
+                  {
+                    "family": "Demonstrator",
+                    "given": [
+                      "GPConnect"
+                    ],
+                    "prefix": [
+                      "Dr"
+                    ]
+                  }
+                ]
+              }
+            }
+          x-multiline: true
         - name: start
           in: query
           description: Slot start date/time
@@ -301,6 +494,103 @@ paths:
       tags:
         - Appointment Management
       summary: Book an appointment
+      parameters:
+        - name: Ssp-TraceID
+          in: header
+          description: Consumer trace identifier
+          required: true
+          schema:
+            type: string
+          example: 09a01679-2564-0fb4-5129-aecc81ea2706
+        - name: Ssp-From
+          in: header
+          description: Consumer ASID
+          required: true
+          schema:
+            type: string
+          example: '200000000359'
+        - name: Ssp-To
+          in: header
+          description: Provider ASID
+          required: true
+          schema:
+            type: string
+          example: '918999198993'
+        - name: Ssp-InteractionID
+          in: header
+          description: SDS interaction identifier
+          required: true
+          schema:
+            type: string
+            default: urn:nhs:names:services:gpconnect:fhir:rest:create:appointment-1
+        - name: Authorization
+          in: header
+          description: Authorization header containing JWT
+          required: true
+          schema:
+            type: string
+            x-multiline: true
+          example: |-
+            {
+              "iss": "https://orange.testlab.nhs.uk/",
+              "sub": "1",
+              "aud": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/v1/fhir",
+              "exp": <<expiry>>,
+              "iat": <<issued_at>>,
+              "reason_for_request": "directcare",
+              "requested_scope": "patient/*.write",
+              "requesting_device": {
+                "resourceType": "Device",
+                "identifier": [
+                  {
+                    "system": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/Id/local-system-instance-id",
+                    "value": "gpcdemonstrator-1-orange"
+                  }
+                ],
+                "model": "GP Connect Demonstrator",
+                "version": "1.2.7"
+              },
+              "requesting_organization": {
+                "resourceType": "Organization",
+                "identifier": [
+                  {
+                    "system": "https://fhir.nhs.uk/Id/ods-organization-code",
+                    "value": "A11111"
+                  }
+                ],
+                "name": "Consumer organisation name"
+              },
+              "requesting_practitioner": {
+                "resourceType": "Practitioner",
+                "id": "1",
+                "identifier": [
+                  {
+                    "system": "https://fhir.nhs.uk/Id/sds-user-id",
+                    "value": "111111111111"
+                  },
+                  {
+                    "system": "https://fhir.nhs.uk/Id/sds-role-profile-id",
+                    "value": "22222222222222"
+                  },
+                  {
+                    "system": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/Id/local-user-id",
+                    "value": "1"
+                  }
+                ],
+                "name": [
+                  {
+                    "family": "Demonstrator",
+                    "given": [
+                      "GPConnect"
+                    ],
+                    "prefix": [
+                      "Dr"
+                    ]
+                  }
+                ]
+              }
+            }
+          x-multiline: true
       requestBody:
         description: Appointment
         content:
@@ -361,6 +651,102 @@ paths:
         - Appointment Management
       summary: Read an appointment
       parameters:
+        - name: Ssp-TraceID
+          in: header
+          description: Consumer trace identifier
+          required: true
+          schema:
+            type: string
+          example: 09a01679-2564-0fb4-5129-aecc81ea2706
+        - name: Ssp-From
+          in: header
+          description: Consumer ASID
+          required: true
+          schema:
+            type: string
+          example: '200000000359'
+        - name: Ssp-To
+          in: header
+          description: Provider ASID
+          required: true
+          schema:
+            type: string
+          example: '918999198993'
+        - name: Ssp-InteractionID
+          in: header
+          description: SDS interaction identifier
+          required: true
+          schema:
+            type: string
+            default: urn:nhs:names:services:gpconnect:fhir:rest:read:appointment-1
+        - name: Authorization
+          in: header
+          description: Authorization header containing JWT
+          required: true
+          schema:
+            type: string
+            x-multiline: true
+          example: |-
+            {
+              "iss": "https://orange.testlab.nhs.uk/",
+              "sub": "1",
+              "aud": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/v1/fhir",
+              "exp": <<expiry>>,
+              "iat": <<issued_at>>,
+              "reason_for_request": "directcare",
+              "requested_scope": "patient/*.read",
+              "requesting_device": {
+                "resourceType": "Device",
+                "identifier": [
+                  {
+                    "system": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/Id/local-system-instance-id",
+                    "value": "gpcdemonstrator-1-orange"
+                  }
+                ],
+                "model": "GP Connect Demonstrator",
+                "version": "1.2.7"
+              },
+              "requesting_organization": {
+                "resourceType": "Organization",
+                "identifier": [
+                  {
+                    "system": "https://fhir.nhs.uk/Id/ods-organization-code",
+                    "value": "A11111"
+                  }
+                ],
+                "name": "Consumer organisation name"
+              },
+              "requesting_practitioner": {
+                "resourceType": "Practitioner",
+                "id": "1",
+                "identifier": [
+                  {
+                    "system": "https://fhir.nhs.uk/Id/sds-user-id",
+                    "value": "111111111111"
+                  },
+                  {
+                    "system": "https://fhir.nhs.uk/Id/sds-role-profile-id",
+                    "value": "22222222222222"
+                  },
+                  {
+                    "system": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/Id/local-user-id",
+                    "value": "1"
+                  }
+                ],
+                "name": [
+                  {
+                    "family": "Demonstrator",
+                    "given": [
+                      "GPConnect"
+                    ],
+                    "prefix": [
+                      "Dr"
+                    ]
+                  }
+                ]
+              }
+            }
+          x-multiline: true
         - name: id
           in: path
           description: Appointment logical identifier
@@ -380,6 +766,105 @@ paths:
         - Appointment Management
       summary: Cancel an appointment
       parameters:
+        - name: Ssp-TraceID
+          in: header
+          description: Consumer trace identifier
+          required: true
+          schema:
+            type: string
+          example: 09a01679-2564-0fb4-5129-aecc81ea2706
+        - name: Ssp-From
+          in: header
+          description: Consumer ASID
+          required: true
+          schema:
+            type: string
+          example: '200000000359'
+        - name: Ssp-To
+          in: header
+          description: Provider ASID
+          required: true
+          schema:
+            type: string
+          example: '918999198993'
+        - name: Ssp-InteractionID
+          in: header
+          description: SDS interaction identifier
+          required: true
+          schema:
+            type: string
+            default: urn:nhs:names:services:gpconnect:fhir:rest:update:appointment-1
+            enum:
+              - urn:nhs:names:services:gpconnect:fhir:rest:update:appointment-1
+              - urn:nhs:names:services:gpconnect:fhir:rest:cancel:appointment-1
+        - name: Authorization
+          in: header
+          description: Authorization header containing JWT
+          required: true
+          schema:
+            type: string
+            x-multiline: true
+          example: |-
+            {
+              "iss": "https://orange.testlab.nhs.uk/",
+              "sub": "1",
+              "aud": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/v1/fhir",
+              "exp": <<expiry>>,
+              "iat": <<issued_at>>,
+              "reason_for_request": "directcare",
+              "requested_scope": "patient/*.write",
+              "requesting_device": {
+                "resourceType": "Device",
+                "identifier": [
+                  {
+                    "system": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/Id/local-system-instance-id",
+                    "value": "gpcdemonstrator-1-orange"
+                  }
+                ],
+                "model": "GP Connect Demonstrator",
+                "version": "1.2.7"
+              },
+              "requesting_organization": {
+                "resourceType": "Organization",
+                "identifier": [
+                  {
+                    "system": "https://fhir.nhs.uk/Id/ods-organization-code",
+                    "value": "A11111"
+                  }
+                ],
+                "name": "Consumer organisation name"
+              },
+              "requesting_practitioner": {
+                "resourceType": "Practitioner",
+                "id": "1",
+                "identifier": [
+                  {
+                    "system": "https://fhir.nhs.uk/Id/sds-user-id",
+                    "value": "111111111111"
+                  },
+                  {
+                    "system": "https://fhir.nhs.uk/Id/sds-role-profile-id",
+                    "value": "22222222222222"
+                  },
+                  {
+                    "system": "https://orange.testlab.nhs.uk/gpconnect-demonstrator/Id/local-user-id",
+                    "value": "1"
+                  }
+                ],
+                "name": [
+                  {
+                    "family": "Demonstrator",
+                    "given": [
+                      "GPConnect"
+                    ],
+                    "prefix": [
+                      "Dr"
+                    ]
+                  }
+                ]
+              }
+            }
+          x-multiline: true
         - name: id
           in: path
           description: Appointment logical identifier
