@@ -301,10 +301,10 @@ paths:
           application/fhir+json:
             schema:
               type: object
-              example:
-                resourceType: Appointment
-                meta:
-                  profile:
+            example:
+              resourceType: Appointment
+              meta:
+                profile:
                     - >-
                       https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-Appointment-1
                 contained:
@@ -381,11 +381,11 @@ paths:
           application/fhir+json:
             schema:
               type: object
-              example:
-                resourceType: Appointment
-                id: '3'
-                meta:
-                  profile:
+            example:
+              resourceType: Appointment
+              id: '3'
+              meta:
+                profile:
                     - >-
                       https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-Appointment-1
                 contained:
