@@ -312,7 +312,7 @@ paths:
             type: array
             items:
               type: string
-            default: '["ge2020-05-09","le2020-05-19"]'
+            default: ["ge2020-05-09","le2020-05-19"]
       responses:
         '200':
           description: OK
