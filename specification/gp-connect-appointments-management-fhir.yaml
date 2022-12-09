@@ -31,7 +31,6 @@ info:
     This API:
 
     - is only intended for use by patient-facing applications
-    - is only intended for non-clinical use
     - can only be used where there is a legal basis to do so
 
     Make sure you have a valid use case before you go too far with your development. To do this, contact us.
@@ -149,8 +148,7 @@ info:
 
     ## Onboarding
 
-    We are hoping to make the assurance process as lightweight and as
-    self-service as possible.
+    This API is not yet available for onboarding.
 
     ### Expressing an interest
 
