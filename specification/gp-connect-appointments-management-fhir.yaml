@@ -143,8 +143,8 @@ info:
 
     - 500 to 599 if it failed because of an error on our server
 
-    Errors specific to each API are shown in the Endpoints section, under
-    Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
+    Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
+    API Specific errors can be found [here.](https://simplifier.net/guide/pfs-appointments/guides-pfs-appointments-home-build-error-handling?version=current)
 
 
     ## Onboarding
