@@ -12,12 +12,12 @@ info:
     You can:
      - retrieve a patient’s appointments
      - search for free slots
-     - read an appointment
+     - get details of a single appointment
      - book an appointment
      - cancel an appointment
 
     You cannot:
-     - amend a patient's appointments
+     - amend a patient's appointments beyond cancelling
      - re-schedule a patient's appointments (this must be done by cancelling and re-booking)
 
     To use this API, the end user must be a patient who is:
@@ -60,9 +60,21 @@ info:
 
       The following APIs are related to this API:
 
-      - [GP Connect Structured Record API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-pfs-structured-record) - retrieve a patient's medical record from the GP practice systems.
-      - [GP Connect Prescriptions Management API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-pfs-prescriptions) - manage a patient's prescriptions as held by the GP practice systems
-      - [GP Connect User Permissions API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-pfs-user-management) - manage a patient's permissions to access the medical record and services they can access at their GP practice.
+      [GP Connect Access Document - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-document-fhir) - retrieve unstructured documents from a patient's GP practice record.
+
+      [GP Connect Access Record: HTML - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-record-html-fhir) - view a patient's GP practice record, with read-only access.
+
+      [GP Connect Access Record: Structured - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-record-structured-fhir) - retrieve structured information from a patient's GP practice record.
+
+      [GP Connect Appointment Management - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-appointment-management-fhir) - manage GP practice appointments between different systems.
+
+      [GP Connect Send Document - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-send-document-fhir) - send a PDF consultation summary to a registered GP practice.
+
+      [GP Connect (Patient Facing) Access Record - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-patient-facing-access-record-fhir) - access a patient's GP records with the GP Connect (patient facing) Access Record - FHIR API.
+
+      [GP Connect (Patient Facing) Appointment Management - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-patient-facing-appointment-management-fhir) - manage a patient's GP appointments using the GP Connect (patient facing) Appointment Management - FHIR API.
+
+      [GP Connect (Patient Facing) Prescriptions - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-patient-facing-prescriptions-fhir) - manage a patient's prescriptions using the GP Connect (patient facing) Prescriptions - FHIR API.
 
     ## API status and roadmap
 
@@ -78,13 +90,13 @@ info:
 
     This API is a FHIR API.
 
-    It sends a FHIR STU3 payload over a Spine Server Proxy (SSP) transport.
+    It sends a FHIR STU3 payload.
 
     For more details, see [FHIR](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#fhir).
 
     ## Network access
 
-    This API is available on the internet.
+    This API is available on the internet and indirectly over HSCN.
 
     For more details, see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).
 
@@ -100,11 +112,13 @@ info:
 
     The API uses Open ID Connect to authenticate the end user and OAuth 2.0 to authorise the calling system. It supports the following security pattern using NHS login:
 
+    [User-restricted RESTful APIs - NHS login separate authentication and authorisation](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/user-restricted-restful-apis-nhs-login-separate-authentication-and-authorisation)
+
     ## Environments and testing
 
     | Purpose          | URL                                                   |
     | -------          | ---                                                   |
-    | Sandbox          | `https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir` |
+    | Sandbox          | `https://sandbox.api.service.nhs.uk/gp-connect/patient-facing/appointments-management-fhir.
     | Integration test | Not yet available                                     |
     | Production       | Not yet available                                     |
 
@@ -172,12 +186,6 @@ info:
 
     Start your development work within 6 months of use case approval. If you miss this date, a review or new submission of the use case will be required. Changes or additional development will also require a review or new use case submission.
 
-    ## Interactions
-
-    For a full list of interactions for this API, see [pfs-appointments](https://simplifier.net/guide/pfs-appointments?version=current)
-
-    For details on the general structure of the interactions, see [Fhir](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#fhir)
-
   contact:
     name: gp-connect-appointments-management-fhir API Support
     url: https://digital.nhs.uk/developer/help-and-support
@@ -190,7 +198,7 @@ servers:
   - description: Production environment.
     url: https://api.service.nhs.uk/gp-connect-appointments-management-fhir
 paths:
-  /FHIR/STU3/Patient/{id}/Appointment:
+  /FHIR/STU3/appointment:
     get:
       tags:
         - Appointment Management
@@ -200,15 +208,15 @@ paths:
         - $ref: "#/components/parameters/CorrelationID"
         - $ref: "#/components/parameters/RequestID"
         - name: id
-          in: path
-          description: Patient logical identifier
+          in: query
+          description: The patient's NHS number. The primary identifier of a patient, unique within NHS England and Wales. Always 10 digits and must be a [valid NHS number](https://www.datadictionary.nhs.uk/attributes/nhs_number.html).
           required: true
           schema:
             type: string
-          example: '2'
+          example: '9000000009'
         - name: start
           in: query
-          description: Appointment start/end dates
+          description: Appointment start/end dates. Default values show a query for appointments on or after 2020-05-09 and on or before 2020-05-19.
           required: true
           style: form
           explode: true
@@ -227,61 +235,124 @@ paths:
               examples:
                 example:
                   value:
-                    resourceType: Appointment
-                    id: '150'
-                    meta:
-                      versionId: '1503440820000'
-                      profile:
-                        - https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-Appointment-1
-                    contained:
-                      - resourceType: Organization
-                        id: '1'
-                        meta:
-                          profile:
-                            - https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1
-                        identifier:
-                          - system: https://fhir.nhs.uk/Id/ods-organization-code
-                            value: Z100
-                        type:
-                          - coding:
-                              - system: https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1
-                                code: urgent-care
-                        name: North Ambulance Service
-                        telecom:
-                          - system: phone
-                            value: '01111222333'
-                    extension:
-                      - url: https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-BookingOrganisation-1
-                        valueReference:
-                          reference: '#1'
-                      - url: https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-PractitionerRole-1
-                        valueCodeableConcept:
-                          coding:
-                            - system: https://fhir.nhs.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1
-                              code: R0260
-                              display: General Medical Practitioner
-                      - url: https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-DeliveryChannel-2
-                        valueCode: In-person
-                    status: booked
-                    serviceCategory:
-                      text: General GP Appointments
-                    serviceType:
-                      - text: General GP Appointment
-                    description: GP Connect Appointment description 148
-                    start: '2017-08-17T11:20:00+01:00'
-                    end: '2017-08-17T11:30:00+01:00'
-                    minutesDuration: 10
-                    slot:
-                      - reference: Slot/303
-                    created: '2017-08-14T13:48:41+01:00'
-                    participant:
-                      - actor:
-                          reference: Patient/1001
-                        status: accepted
-                      - actor:
-                          reference: Location/1
-                        status: accepted
-
+                    resourceType: Bundle
+                    type: searchset
+                    entry:
+                      - resource:
+                          resourceType: Appointment
+                          id: '149'
+                          meta:
+                            versionId: '1503310820000'
+                            profile:
+                              - https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-Appointment-1
+                          contained:
+                            - resourceType: Organization
+                              id: '1'
+                              meta:
+                                profile:
+                                  - https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1
+                              identifier:
+                                - system: https://fhir.nhs.uk/Id/ods-organization-code
+                                  value: A00123
+                              type:
+                                - coding:
+                                    - system: https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1
+                                      code: gp-practice
+                              name: West Road GP Practice
+                              telecom:
+                                - system: phone
+                                  value: '03003035678'
+                          extension:
+                            - url: https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-BookingOrganisation-1
+                              valueReference:
+                                reference: '#1'
+                            - url: https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-PractitionerRole-1
+                              valueCodeableConcept:
+                                coding:
+                                  - system: https://fhir.nhs.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1
+                                    code: R0600
+                                    display: Specialist Nurse Practitioner
+                            - url: https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-DeliveryChannel-2
+                              valueCode: In-person
+                          status: booked
+                          serviceCategory:
+                            text: Nurse Appointments
+                          serviceType:
+                            - text: Nurse Appointment
+                          description: GP Connect Appointment description 148
+                          start: '2017-08-21T10:30:00+01:00'
+                          end: '2017-08-21T10:50:00+01:00'
+                          minutesDuration: 20
+                          slot:
+                            - reference: Slot/544
+                            - reference: Slot/545
+                          created: '2017-07-09T13:48:41+01:00'
+                          comment: Test Appointment Comment 148
+                          participant:
+                            - actor:
+                                reference: Patient/9000000009
+                              status: accepted
+                            - actor:
+                                reference: Location/1
+                              status: accepted
+                            - actor:
+                                reference: Practitioner/2
+                              status: accepted
+                      - resource:
+                          resourceType: Appointment
+                          id: '150'
+                          meta:
+                            versionId: '1503440820000'
+                            profile:
+                              - https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-Appointment-1
+                          contained:
+                            - resourceType: Organization
+                              id: '1'
+                              meta:
+                                profile:
+                                  - https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1
+                              identifier:
+                                - system: https://fhir.nhs.uk/Id/ods-organization-code
+                                  value: Z100
+                              type:
+                                - coding:
+                                    - system: https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1
+                                      code: GP Practice
+                              name: DR P Stamp
+                              telecom:
+                                - system: phone
+                                  value: '01111222333'
+                          extension:
+                            - url: https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-BookingOrganisation-1
+                              valueReference:
+                                reference: '#1'
+                            - url: https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-PractitionerRole-1
+                              valueCodeableConcept:
+                                coding:
+                                  - system: https://fhir.nhs.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1
+                                    code: R0260
+                                    display: General Medical Practitioner
+                            - url: https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-DeliveryChannel-2
+                              valueCode: In-person
+                          status: booked
+                          serviceCategory:
+                            text: General GP Appointments
+                          serviceType:
+                            - text: General GP Appointment
+                          description: GP Connect Appointment description 148
+                          start: '2017-08-17T11:20:00+01:00'
+                          end: '2017-08-17T11:30:00+01:00'
+                          minutesDuration: 10
+                          slot:
+                            - reference: Slot/303
+                          created: '2017-08-14T13:48:41+01:00'
+                          participant:
+                            - actor:
+                                reference: Patient/9000000009
+                              status: accepted
+                            - actor:
+                                reference: Location/1
+                              status: accepted
   /FHIR/STU3/Slot:
     get:
       tags:
@@ -511,8 +582,8 @@ paths:
                        type:
                          - coding:
                              - system: https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1
-                               code: urgent-care
-                       name: North Ambulance Service
+                               code: GP Practice
+                       name: Dr P. Stamp
                        telecom:
                          - system: phone
                            value: '01111222333'
@@ -520,7 +591,7 @@ paths:
                            - url: https://fhir.nhs.uk/STU3/StructureDefinition/Extension-GPConnect-BookingOrganisation-1
                        valueReference:
                          reference: '#1'
-                         status: booked
+                         status: proposed
                          description: Free text description.
                          start: '2017-05-30T10:00:00+01:00'
                          end: '2017-05-30T10:25:00+01:00'
@@ -530,7 +601,7 @@ paths:
                          comment: Free text comment.
                          participant:
                      - actor:
-                         reference: Patient/1
+                         reference: Patient/9000000009
                        status: accepted
                      - actor:
                          reference: Location/32
@@ -562,8 +633,8 @@ paths:
                     type:
                       - coding:
                           - system: https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1
-                            code: urgent-care
-                    name: North Ambulance Service
+                            code: GP Practice
+                    name: Dr P.Stamp
                     telecom:
                       - system: phone
                         value: '01111222333'
@@ -594,7 +665,7 @@ paths:
                 comment: Free text comment.
                 participant:
                   - actor:
-                      reference: Patient/1
+                      reference: Patient/9000000009
                     status: accepted
                   - actor:
                       reference: Location/32
@@ -604,7 +675,7 @@ paths:
     get:
       tags:
         - Appointment Management
-      summary: Read an appointment
+      summary: Get details of a single appointment
       parameters:
         - $ref: "#/components/parameters/BearerAuthorization"
         - $ref: "#/components/parameters/CorrelationID"
@@ -644,8 +715,8 @@ paths:
                         type:
                           - coding:
                               - system: https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1
-                                code: urgent-care
-                        name: North Ambulance Service
+                                code: GP Practice
+                        name: Dr P. Stamp
                         telecom:
                           - system: phone
                             value: '01111222333'
@@ -675,7 +746,7 @@ paths:
                     created: '2017-08-14T13:48:41+01:00'
                     participant:
                       - actor:
-                          reference: Patient/1001
+                          reference: Patient/9000000009
                         status: accepted
                       - actor:
                           reference: Location/1
@@ -741,7 +812,7 @@ paths:
               comment: Free text comment.
               participant:
                 - actor:
-                    reference: Patient/1
+                    reference: Patient/9000000009
                   status: accepted
                 - actor:
                     reference: Location/32
@@ -808,7 +879,7 @@ paths:
                     comment: Free text comment.
                     participant:
                       - actor:
-                          reference: Patient/1
+                          reference: Patient/9000000009
                         status: accepted
                       - actor:
                           reference: Location/32
