@@ -7,6 +7,8 @@ info:
   description: |
     ## Overview
 
+    ![Appointments Overview](https://raw.githubusercontent.com/NHSDigital/gp-connect-appointments-management-fhir/specification/diagrams/GP-Connect-PFS-Appointment-Management.svg)
+
     Use this API to book and manage patient appointments at their GP practice.
 
     You can:
@@ -198,7 +200,7 @@ servers:
   - description: Production environment.
     url: https://api.service.nhs.uk/gp-connect-appointments-management-fhir
 paths:
-  /FHIR/STU3/appointment:
+  /FHIR/STU3/patient/{id}/appointment:
     get:
       tags:
         - Appointment Management
@@ -208,7 +210,7 @@ paths:
         - $ref: "#/components/parameters/CorrelationID"
         - $ref: "#/components/parameters/RequestID"
         - name: id
-          in: query
+          in: path
           description: The patient's NHS number. The primary identifier of a patient, unique within NHS England and Wales. Always 10 digits and must be a [valid NHS number](https://www.datadictionary.nhs.uk/attributes/nhs_number.html).
           required: true
           schema:
