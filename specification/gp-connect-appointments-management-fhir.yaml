@@ -7,7 +7,7 @@ info:
   description: |
     ## Overview
 
-    ![Appointments Overview](https://raw.githubusercontent.com/NHSDigital/gp-connect-appointments-management-fhir/specification/diagrams/GP-Connect-PFS-Appointment-Management.svg)
+    ![Appointments Overview](https://raw.githubusercontent.com/NHSDigital/gp-connect-appointments-management-fhir/master/specification/diagrams/GP-Connect-PFS-Appointment-Management.svg
 
     Use this API to book and manage patient appointments at their GP practice.
 
