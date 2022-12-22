@@ -399,6 +399,41 @@ paths:
                             system: phone
                             value: '03003035678'
                             use: work
+        '4XX':
+          description: |
+            An error occurred as follows:
+            | HTTP status | Error code                      | Description             |
+            | ----------- | ----------                      | -----------             |
+            | 400         | INVALID_IDENTIFIER_VALUE           | Invalid identifier value.     |
+            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
+            | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
+            | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
+            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
+            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
+            | 403	  | ACCESS_DENIED	            | Access denied	|
+            | 404	  |NO_RECORD_FOUND		    | No record found |
+            | 422| INVALID RESOURCE| Submitted reource is invalid|
+            |422 | INVALID PARAMETER| Submitted parameter is invalid|
+          content:
+            application/fhir+json:
+              schema:
+                type: object
+                description:  https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+              examples:
+                example:
+                  value:
+                    resourceType: OperationOutcome
+                    meta:
+                      profile:
+                        - https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+                    issue:
+                    - severity: error
+                      code: forbidden
+                      details:
+                          coding:
+                            - system: https://fhir.nhs.uk/STU3/ValueSet/Spine-ErrorOrWarningCode-1
+                              code: ACCESS_DENIED
+                              display: Access Denied
   /FHIR/STU3/Appointment:
     post:
       summary: Book an appointment
@@ -520,6 +555,45 @@ paths:
                   - actor:
                       reference: Location/32
                     status: accepted
+        '4XX':
+          description: |
+            An error occurred as follows:
+            | HTTP status | Error code                      | Description             |
+            | ----------- | ----------                      | -----------             |
+            | 400         | INVALID_IDENTIFIER_VA           | Invalid identifier value.     |
+            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
+            | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
+            | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
+            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
+            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
+            | 400   | INVALID_NHS_NUMBER| Nhs Number Invalid.
+            | 403	  | ACCESS_DENIED	            | Access denied	|
+            | 404	  |ORGANISATION_NOT_FOUND		    | Organisation record not found|
+            | 404	  |PRACTITIONER_NOT_FOUND		    | Practitioner record not found |
+            | 404	  |PATIENT_NOT_FOUND		    | Patient record not found |
+            | 404	  |NO_RECORD_FOUND		    | No record found |
+            | 409	  |DUPLICATE_REJECTED	    | Create would lead to creation of a duplicate resource |
+
+          content:
+            application/fhir+json:
+              schema:
+                type: object
+                description:  https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+              examples:
+                example:
+                  value:
+                    resourceType: OperationOutcome
+                    meta:
+                      profile:
+                        - https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+                    issue:
+                    - severity: error
+                      code: not-found
+                      details:
+                          coding:
+                            - system: https://fhir.nhs.uk/STU3/ValueSet/Spine-ErrorOrWarningCode-1
+                              code: NO_RECORD_FOUND
+                              display: No record found
       x-codegen-request-body-name: body
   /FHIR/STU3/patient/{id}/appointment:
     get:
@@ -676,6 +750,39 @@ paths:
                             - actor:
                                 reference: Location/1
                               status: accepted
+        '4XX':
+          description: |
+            An error occurred as follows:
+            | HTTP status | Error code                      | Description             |
+            | ----------- | ----------                      | -----------             |
+            | 400         | INVALID_IDENTIFIER_VA           | Invalid identifier value.     |
+            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
+            | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
+            | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
+            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
+            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
+            | 403	  | ACCESS_DENIED	            | Access denied	|
+            | 404	  |NO_RECORD_FOUND		    | No record found |
+          content:
+            application/fhir+json:
+              schema:
+                type: object
+                description:  https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+              examples:
+                example:
+                  value:
+                    resourceType: OperationOutcome
+                    meta:
+                      profile:
+                        - https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+                    issue:
+                    - severity: error
+                      code: not-found
+                      details:
+                          coding:
+                            - system: https://fhir.nhs.uk/STU3/ValueSet/Spine-ErrorOrWarningCode-1
+                              code: NO_RECORD_FOUND
+                              display: No record found
 
   /FHIR/STU3/Appointment/{id}:
     get:
@@ -757,6 +864,39 @@ paths:
                       - actor:
                           reference: Location/1
                         status: accepted
+        '4XX':
+          description: |
+            An error occurred as follows:
+            | HTTP status | Error code                      | Description             |
+            | ----------- | ----------                      | -----------             |
+            | 400         | INVALID_IDENTIFIER_VA           | Invalid identifier value.     |
+            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
+            | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
+            | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
+            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
+            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
+            | 403	  | ACCESS_DENIED	            | Access denied	|
+            | 404	  |NO_RECORD_FOUND		    | No record found |
+          content:
+            application/fhir+json:
+              schema:
+                type: object
+                description:  https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+              examples:
+                example:
+                  value:
+                    resourceType: OperationOutcome
+                    meta:
+                      profile:
+                        - https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+                    issue:
+                    - severity: error
+                      code: not-found
+                      details:
+                          coding:
+                            - system: https://fhir.nhs.uk/STU3/ValueSet/Spine-ErrorOrWarningCode-1
+                              code: NO_RECORD_FOUND
+                              display: No record found
     put:
       summary: Cancel an appointment
       description: Cancel a specific appointment using the appointment id
@@ -891,7 +1031,39 @@ paths:
                       - actor:
                           reference: Location/32
                         status: accepted
-
+        '4XX':
+          description: |
+            An error occurred as follows:
+            | HTTP status | Error code                      | Description             |
+            | ----------- | ----------                      | -----------             |
+            | 400         | INVALID_IDENTIFIER_VA           | Invalid identifier value.     |
+            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
+            | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
+            | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
+            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
+            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
+            | 403	  | ACCESS_DENIED	            | Access denied	|
+            | 404	  |NO_RECORD_FOUND		    | No record found |
+          content:
+            application/fhir+json:
+              schema:
+                type: object
+                description:  https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+              examples:
+                example:
+                  value:
+                    resourceType: OperationOutcome
+                    meta:
+                      profile:
+                        - https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+                    issue:
+                    - severity: error
+                      code: not-found
+                      details:
+                          coding:
+                            - system: https://fhir.nhs.uk/STU3/ValueSet/Spine-ErrorOrWarningCode-1
+                              code: NO_RECORD_FOUND
+                              display: No record found
       x-codegen-request-body-name: body
 components:
   parameters:
