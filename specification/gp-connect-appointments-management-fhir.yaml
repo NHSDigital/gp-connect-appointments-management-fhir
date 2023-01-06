@@ -116,6 +116,8 @@ info:
 
     - [User-restricted RESTful APIs - NHS login separate authentication and authorisation](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/user-restricted-restful-apis-nhs-login-separate-authentication-and-authorisation)
 
+    You should manage access to your system locally using local role-based access control (RBAC). This does not need to be compliant with the national RBAC model and GP Connect products do not require smartcards to control access, though they can be used if already implemented.
+
     ## Environments and testing
 
     | Purpose          | URL                                                   |
@@ -277,7 +279,7 @@ paths:
             application/fhir+json:
               schema:
                 type: object
-                description: https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Slot-1?version=current
+                description: Link to GPConnect-Slot-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Slot-1?version=current)
               examples:
                 example:
                   value:
@@ -401,6 +403,7 @@ paths:
                             use: work
         '4XX':
           description: |
+
             An error occurred as follows:
             | HTTP status | Error code                      | Description             |
             | ----------- | ----------                      | -----------             |
@@ -418,7 +421,7 @@ paths:
             application/fhir+json:
               schema:
                 type: object
-                description:  https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+                description: Link to GPConnect-OperationOutcome-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-OperationOutcome-1?version=current)
               examples:
                 example:
                   value:
@@ -437,7 +440,7 @@ paths:
   /FHIR/STU3/Appointment:
     post:
       summary: Book an appointment
-      description: Book an appointment using the patient details and a retreived slot details
+      description: Book an appointment using the patient details and a retreived slot details.
       parameters:
         - $ref: "#/components/parameters/BearerAuthorization"
         - $ref: "#/components/parameters/CorrelationID"
@@ -448,7 +451,7 @@ paths:
           application/fhir+json:
             schema:
               type: object
-              description: https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Appointment-1?version=current
+              description: Link to Profile--GPConnect-Appointment-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Appointment-1?version=current)
             example:
               resourceType: Appointment
               meta:
@@ -498,7 +501,7 @@ paths:
             application/fhir+json:
               schema:
                 type: object
-                description: https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Appointment-1?version=current
+                description: Link to Profile--GPConnect-Appointment-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Appointment-1?version=current)
               example:
                 resourceType: Appointment
                 id: '9'
@@ -557,6 +560,7 @@ paths:
                     status: accepted
         '4XX':
           description: |
+
             An error occurred as follows:
             | HTTP status | Error code                      | Description             |
             | ----------- | ----------                      | -----------             |
@@ -578,7 +582,7 @@ paths:
             application/fhir+json:
               schema:
                 type: object
-                description:  https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+                description:  Link to GPConnect-OperationOutcome-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-OperationOutcome-1?version=current)
               examples:
                 example:
                   value:
@@ -598,7 +602,7 @@ paths:
   /FHIR/STU3/patient/{id}/appointment:
     get:
       summary: Read a patient's appointments
-      description: Retrieve all appointments for the patient within a defined time-frame
+      description: Retrieve all appointments for the patient within a defined time-frame.
       parameters:
         - $ref: "#/components/parameters/BearerAuthorization"
         - $ref: "#/components/parameters/CorrelationID"
@@ -628,7 +632,7 @@ paths:
             application/fhir+json:
               schema:
                 type: object
-                description: https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Appointment-1?version=current
+                description: Link to Profile--GPConnect-Appointment-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Appointment-1?version=current)
               examples:
                 example:
                   value:
@@ -752,6 +756,7 @@ paths:
                               status: accepted
         '4XX':
           description: |
+
             An error occurred as follows:
             | HTTP status | Error code                      | Description             |
             | ----------- | ----------                      | -----------             |
@@ -767,7 +772,7 @@ paths:
             application/fhir+json:
               schema:
                 type: object
-                description:  https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+                description:  Link to GPConnect-OperationOutcome-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-OperationOutcome-1?version=current)
               examples:
                 example:
                   value:
@@ -787,7 +792,7 @@ paths:
   /FHIR/STU3/Appointment/{id}:
     get:
       summary: Get details of a single appointment
-      description: Get a detailed view of a single patient appointment using the appointment id
+      description: Get a detailed view of a single patient appointment using the appointment id.
       parameters:
         - $ref: "#/components/parameters/BearerAuthorization"
         - $ref: "#/components/parameters/CorrelationID"
@@ -806,7 +811,7 @@ paths:
             application/fhir+json:
               schema:
                 type: object
-                description: https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Appointment-1?version=current
+                description: Link to Profile--GPConnect-Appointment-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Appointment-1?version=current)
               examples:
                 example:
                   value:
@@ -866,6 +871,7 @@ paths:
                         status: accepted
         '4XX':
           description: |
+
             An error occurred as follows:
             | HTTP status | Error code                      | Description             |
             | ----------- | ----------                      | -----------             |
@@ -881,7 +887,7 @@ paths:
             application/fhir+json:
               schema:
                 type: object
-                description:  https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+                description:  Link to GPConnect-OperationOutcome-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-OperationOutcome-1?version=current)
               examples:
                 example:
                   value:
@@ -899,7 +905,7 @@ paths:
                               display: No record found
     put:
       summary: Cancel an appointment
-      description: Cancel a specific appointment using the appointment id
+      description: Cancel a specific appointment using the appointment id.
       parameters:
         - $ref: "#/components/parameters/BearerAuthorization"
         - $ref: "#/components/parameters/CorrelationID"
@@ -917,7 +923,7 @@ paths:
           application/fhir+json:
             schema:
               type: object
-              description: https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Appointment-1?version=current
+              description: Link to Profile--GPConnect-Appointment-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Appointment-1?version=current)
             example:
               resourceType: Appointment
               id: '9'
@@ -970,7 +976,7 @@ paths:
             application/fhir+json:
               schema:
                 type: object
-                description: https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Appointment-1?version=current
+                description: Link to Profile--GPConnect-Appointment-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-Appointment-1?version=current)
               examples:
                 example:
                   value:
@@ -1033,6 +1039,7 @@ paths:
                         status: accepted
         '4XX':
           description: |
+
             An error occurred as follows:
             | HTTP status | Error code                      | Description             |
             | ----------- | ----------                      | -----------             |
@@ -1048,7 +1055,7 @@ paths:
             application/fhir+json:
               schema:
                 type: object
-                description:  https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
+                description:  Link to GPConnect-OperationOutcome-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-OperationOutcome-1?version=current)
               examples:
                 example:
                   value:
