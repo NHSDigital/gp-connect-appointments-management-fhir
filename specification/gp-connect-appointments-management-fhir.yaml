@@ -273,7 +273,7 @@ paths:
                   https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1|urgent-care
                 - https://fhir.nhs.uk/Id/ods-organization-code|A20047
       responses:
-        '200':
+        200:
           description: OK
           content:
             application/fhir+json:
@@ -401,7 +401,7 @@ paths:
                             system: phone
                             value: '03003035678'
                             use: work
-        '4XX':
+        4XX:
           description: |
 
             An error occurred as follows:
@@ -495,7 +495,7 @@ paths:
                        status: accepted
                        required: true
       responses:
-        '201':
+        201:
           description: Created
           content:
             application/fhir+json:
@@ -558,7 +558,7 @@ paths:
                   - actor:
                       reference: Location/32
                     status: accepted
-        '4XX':
+        4XX:
           description: |
 
             An error occurred as follows:
@@ -626,7 +626,7 @@ paths:
               type: string
             default: ["ge2020-05-09","le2020-05-19"]
       responses:
-        '200':
+        200:
           description: OK
           content:
             application/fhir+json:
@@ -754,7 +754,7 @@ paths:
                             - actor:
                                 reference: Location/1
                               status: accepted
-        '4XX':
+        4XX:
           description: |
 
             An error occurred as follows:
@@ -805,7 +805,7 @@ paths:
             type: string
           example: '1'
       responses:
-        '200':
+        200:
           description: OK
           content:
             application/fhir+json:
@@ -869,7 +869,7 @@ paths:
                       - actor:
                           reference: Location/1
                         status: accepted
-        '4XX':
+        4XX:
           description: |
 
             An error occurred as follows:
@@ -970,7 +970,7 @@ paths:
                     reference: Location/32
                   status: accepted
       responses:
-        '200':
+        200:
           description: OK
           content:
             application/fhir+json:
@@ -1037,7 +1037,7 @@ paths:
                       - actor:
                           reference: Location/32
                         status: accepted
-        '4XX':
+        4XX:
           description: |
 
             An error occurred as follows:
