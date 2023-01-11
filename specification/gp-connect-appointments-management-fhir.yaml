@@ -403,7 +403,6 @@ paths:
                             use: work
         4XX:
           description: |
-
             An error occurred as follows:
             | HTTP status | Error code                      | Description             |
             | ----------- | ----------                      | -----------             |
@@ -415,8 +414,9 @@ paths:
             | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
             | 403	  | ACCESS_DENIED	            | Access denied	|
             | 404	  |NO_RECORD_FOUND		    | No record found |
-            | 422| INVALID RESOURCE| Submitted reource is invalid|
-            |422 | INVALID PARAMETER| Submitted parameter is invalid|
+            | 422| INVALID RESOURCE| Submitted resource is invalid|
+            |422 | INVALID PARAMETER| Submitted parameter is invalid
+            |
           content:
             application/fhir+json:
               schema:
