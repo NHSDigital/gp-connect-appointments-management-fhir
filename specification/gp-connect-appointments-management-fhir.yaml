@@ -13,7 +13,7 @@ info:
 
     You can:
      - search for free slots
-     - book an appointmentment
+     - book an appointment
      - retrieve a patient’s appointments
      - get details of a single appointment
      - cancel an appointment
@@ -414,7 +414,7 @@ paths:
             | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
             | 403	  | ACCESS_DENIED	            | Access denied	|
             | 404	  |NO_RECORD_FOUND		    | No record found |
-            | 422| INVALID RESOURCE| Submitted reource is invalid|
+            | 422| INVALID RESOURCE| Submitted resource is invalid|
             |422 | INVALID PARAMETER| Submitted parameter is invalid
             |
           content:
