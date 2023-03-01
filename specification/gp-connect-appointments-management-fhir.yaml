@@ -114,7 +114,23 @@ info:
     name: gp-connect-appointments-management-fhir API Support
     url: https://digital.nhs.uk/developer/help-and-support
     email: api.management@nhs.net
-
+x-spec-publication:
+  operation-order:
+   -operations:
+    - method: POST
+      path: /FHIR/STU3/Appointment
+    - method: PUT
+      path: /FHIR/STU3/Appointment/{id}
+    - method: GET
+      path: /FHIR/STU3/patient/{id}/appointment
+    - method: GET
+      path: /FHIR/STU3/Appointment/{id}
+    - method: GET
+      path: /FHIR/STU3/Location/{id}
+    - method: GET
+      path: /FHIR/STU3/Practitioner/{id}
+    - method: GET
+      path: /FHIR/STU3/Patient/{identifier}
 servers:
   - description: Sandbox environment.
     url: https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir
