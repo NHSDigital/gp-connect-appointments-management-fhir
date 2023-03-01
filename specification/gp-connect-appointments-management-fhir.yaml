@@ -122,7 +122,7 @@ x-spec-publication:
     - method: PUT
       path: /FHIR/STU3/Appointment/{id}
     - method: GET
-      path: /FHIR/STU3/patient/{id}/appointment
+      path: /FHIR/STU3/Patient/{id}/Appointment
     - method: GET
       path: /FHIR/STU3/Appointment/{id}
     - method: GET
@@ -533,7 +533,7 @@ paths:
                               code: NO_RECORD_FOUND
                               display: No record found
       x-codegen-request-body-name: body
-  /FHIR/STU3/patient/{id}/appointment:
+  /FHIR/STU3/Patient/{id}/Appointment:
     get:
       summary: Read a patient's appointments
       description: Retrieve all appointments for the patient within a defined time-frame.
