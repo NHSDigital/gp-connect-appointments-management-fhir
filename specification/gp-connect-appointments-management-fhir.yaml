@@ -116,21 +116,21 @@ info:
     email: api.management@nhs.net
 x-spec-publication:
   operation-order:
-   -operations:
-    - method: POST
-      path: /FHIR/STU3/Appointment
-    - method: PUT
-      path: /FHIR/STU3/Appointment/{id}
-    - method: GET
-      path: /FHIR/STU3/Patient/{id}/Appointment
-    - method: GET
-      path: /FHIR/STU3/Appointment/{id}
-    - method: GET
-      path: /FHIR/STU3/Location/{id}
-    - method: GET
-      path: /FHIR/STU3/Practitioner/{id}
-    - method: GET
-      path: /FHIR/STU3/Patient/{identifier}
+    - operations:
+      - method: POST
+        path: /FHIR/STU3/Appointment
+      - method: PUT
+        path: /FHIR/STU3/Appointment/{id}
+      - method: GET
+        path: /FHIR/STU3/Patient/{id}/Appointment
+      - method: GET
+        path: /FHIR/STU3/Appointment/{id}
+      - method: GET
+        path: /FHIR/STU3/Location/{id}
+      - method: GET
+        path: /FHIR/STU3/Practitioner/{id}
+      - method: GET
+        path: /FHIR/STU3/Patient/{identifier}
 servers:
   - description: Sandbox environment.
     url: https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir
