@@ -972,6 +972,9 @@ paths:
       summary: Get details of a practitioner
       description: Get a detailed view of a practitioner using the practitioner's id.
       parameters:
+        - $ref: "#/components/parameters/BearerAuthorization"
+        - $ref: "#/components/parameters/CorrelationID"
+        - $ref: "#/components/parameters/RequestID"
         - name: id
           in: path
           description: Practitioner logical identifier
@@ -1046,6 +1049,9 @@ paths:
       summary: Get details of a location
       description: Get a detailed view of a location using the Location's id.
       parameters:
+        - $ref: "#/components/parameters/BearerAuthorization"
+        - $ref: "#/components/parameters/CorrelationID"
+        - $ref: "#/components/parameters/RequestID"
         - name: id
           in: path
           description: Location logical identifier
@@ -1122,6 +1128,9 @@ paths:
       summary: Get details of a patient record using the patient's nhs number
       description: Get a detailed view of a patient using the patient's nhs number.
       parameters:
+        - $ref: "#/components/parameters/BearerAuthorization"
+        - $ref: "#/components/parameters/CorrelationID"
+        - $ref: "#/components/parameters/RequestID"
         - name: identifier
           in: path
           description: Patient identifier
