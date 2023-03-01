@@ -8,15 +8,18 @@ info:
     ## Overview
     ![Appointments Overview](https://raw.githubusercontent.com/NHSDigital/gp-connect-appointments-management-fhir/master/specification/diagrams/GP-Connect-PFS-Appointment-Management.svg)
     Use this API to book and manage patient appointments at their GP practice.
+
     You can:
      - search for free slots
      - book an appointment
      - retrieve a patient’s appointments
      - get details of a single appointment
      - cancel an appointment
+
     You cannot:
      - amend a patient's appointments beyond cancelling
      - re-schedule a patient's appointments (this must be done by cancelling and re-booking)
+
     To use this API, the end user must be a patient who is:
      - registered with the GP practice
      - registered with NHS login to P9 identity verification level
