@@ -114,7 +114,23 @@ info:
     name: gp-connect-appointments-management-fhir API Support
     url: https://digital.nhs.uk/developer/help-and-support
     email: api.management@nhs.net
-
+x-spec-publication:
+  operation-order:
+   -operations:
+    - method: POST
+      path: /FHIR/STU3/Appointment
+    - method: PUT
+      path: /FHIR/STU3/Appointment/{id}
+    - method: GET
+      path: /FHIR/STU3/Patient/{id}/Appointment
+    - method: GET
+      path: /FHIR/STU3/Appointment/{id}
+    - method: GET
+      path: /FHIR/STU3/Location/{id}
+    - method: GET
+      path: /FHIR/STU3/Practitioner/{id}
+    - method: GET
+      path: /FHIR/STU3/Patient/{identifier}
 servers:
   - description: Sandbox environment.
     url: https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir
@@ -520,7 +536,7 @@ paths:
                               code: NO_RECORD_FOUND
                               display: No record found
       x-codegen-request-body-name: body
-  /FHIR/STU3/patient/{id}/appointment:
+  /FHIR/STU3/Patient/{id}/Appointment:
     get:
       summary: Read a patient's appointments
       description: Retrieve all appointments for the patient within a defined time-frame.
