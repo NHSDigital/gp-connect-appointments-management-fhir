@@ -131,6 +131,8 @@ x-spec-publication:
         path: /FHIR/STU3/Practitioner/{id}
       - method: GET
         path: /FHIR/STU3/Patient/{identifier}
+      - method: GET
+        path: /FHIR/STU3/Slot
 servers:
   - description: Sandbox environment.
     url: https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir
