@@ -120,13 +120,15 @@ info:
 x-spec-publication:
   operation-order:
     - operations:
+      - method: GET
+        path: /FHIR/STU3/Slot
       - method: POST
         path: /FHIR/STU3/Appointment
-      - method: PUT
-        path: /FHIR/STU3/Appointment/{id}
       - method: GET
         path: /FHIR/STU3/Patient/{id}/Appointment
       - method: GET
+        path: /FHIR/STU3/Appointment/{id}
+      - method: PUT
         path: /FHIR/STU3/Appointment/{id}
       - method: GET
         path: /FHIR/STU3/Location/{id}
@@ -134,8 +136,7 @@ x-spec-publication:
         path: /FHIR/STU3/Practitioner/{id}
       - method: GET
         path: /FHIR/STU3/Patient/{identifier}
-      - method: GET
-        path: /FHIR/STU3/Slot
+
 servers:
   - description: Sandbox environment.
     url: https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir
