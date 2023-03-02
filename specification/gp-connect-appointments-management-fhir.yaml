@@ -11,6 +11,7 @@ info:
     Use this API to book and manage patient appointments at their GP practice.
 
     You can:
+
      - search for free slots
      - book an appointment
      - retrieve a patient’s appointments
@@ -18,10 +19,12 @@ info:
      - cancel an appointment
 
     You cannot:
+
      - amend a patient's appointments beyond cancelling
      - re-schedule a patient's appointments (this must be done by cancelling and re-booking)
 
     To use this API, the end user must be a patient who is:
+
      - registered with the GP practice
      - registered with NHS login to P9 identity verification level
 
@@ -29,8 +32,10 @@ info:
 
     This API can be used by developers of clinical systems. It is a patient-facing API.
     This API:
+
     - is only intended for use by patient-facing applications
     - can only be used where there is a legal basis to do so
+
     Make sure you have a valid use case before you go too far with your development. To do this, contact us.
     You must do this before you can go live (see 'Onboarding' below).
 
@@ -39,18 +44,22 @@ info:
     #### Information governance (IG)
 
      You must:
+
      - be compliant with the GP Connect Direct Care API Information Governance Model.
      - be using the GP Connect APIs for direct care purposes for NHS patients in England
 
      #### Clinical safety
 
     You must:
+
     - have a clinical safety officer (CSO) who is responsible for DCB0129 and, if necessary, DCB0160. For more on clinical risk management, visit Clinical risk management standards.
+
     If you are confident that you can meet the prerequisites, contact us to express your interest. See 'Onboarding' below.
 
     ## Related APIs
 
       The following APIs are related to this API:
+
       - [GP Connect Access Document - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-document-fhir) - retrieve unstructured documents from a patient's GP practice record.
       - [GP Connect Access Record: HTML - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-record-html-fhir) - view a patient's GP practice record, with read-only access.
       - [GP Connect Access Record: Structured - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-record-structured-fhir) - retrieve structured information from a patient's GP practice record.
@@ -84,10 +93,14 @@ info:
 
     This API is [user-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis), meaning an end user must be present and authenticated to use it.
     The end user must be:
+
     - a patient
     - authenticated with NHS login to P9 identity verification level
+
     The API uses Open ID Connect to authenticate the end user and OAuth 2.0 to authorise the calling system. It supports the following security pattern using NHS login:
+
     - [User-restricted RESTful APIs - NHS login separate authentication and authorisation](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/user-restricted-restful-apis-nhs-login-separate-authentication-and-authorisation)
+
     You should manage access to your system locally using local role-based access control (RBAC). This does not need to be compliant with the national RBAC model and GP Connect products do not require smartcards to control access, though they can be used if already implemented.
 
     ## Environments and testing
@@ -101,29 +114,35 @@ info:
     ### Sandbox testing (not yet available)
 
     Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing):
+
     - is for early developer testing
     - only covers a limited set of scenarios
     - is stateless, so it does not store data
     - is open access, so does not allow you to test authorisation
+
     For more details on sandbox testing, or to try out the sandbox using our
     "Try this API" feature, see the documentation for each endpoint.
 
     ### Integration testing (not yet available)
 
     Our [integration test environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing):
+
     - is for formal integration testing
     - is stateful, so it does persist data
     - includes authorisation
+
     For more details see [integration testing with our RESTful APIs](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing-with-our-restful-apis).
 
     ## Errors
 
     We use standard HTTP status codes to show whether an API request succeeded
     or not. They are usually in the range:
+
     - 200 to 299 if it succeeded, including code 202 if it was accepted by an
     API that needs to wait for further action
     - 400 to 499 if it failed because of a client error by your application
     - 500 to 599 if it failed because of an error on our server
+
     Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
     API Specific errors can be found [here.](https://simplifier.net/guide/pfs-appointments/guides-pfs-appointments-home-build-error-handling?version=current)
 
@@ -136,11 +155,13 @@ info:
     If you meet the prerequisites and have a product that can integrate with GP Connect, you should express an interest with us by submitting a use case.
     The main purpose of the use case is to help us understand how you plan to use GP Connect APIs and the business issue you are looking to address. You should email your use case to us at gpconnect@nhs.net.
     Your use case should include the following information as a minimum:
+
     - the business problem you are intending to solve using GP wConnect
     - how GP Connect will be used in practice to benefit patients and staff
     - which of the GP Connect products you will use to benefit patients and staff
     - any end user organisations you are currently working with
     - who your clinical safety officer is and, where available, your clinical risk management process documentation
+
     Once we receive your use case, we'll respond within 14 days.
 
     ### Consumer assurance process
