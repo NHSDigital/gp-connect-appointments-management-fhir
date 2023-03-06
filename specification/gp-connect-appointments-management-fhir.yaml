@@ -177,6 +177,15 @@ paths:
             default: free
             enum:
               - free
+        - name: limit
+          in: query
+          description: number of slots to return in query, starting at the date given in the start parameter ad working forwards
+          required: true
+          schema:
+            type: string
+            default: '5'
+            enum:
+              - '5'
         - name: _include
           in: query
           description: Include
@@ -565,6 +574,15 @@ paths:
             items:
               type: string
             default: ["ge2020-05-09","le2020-05-19"]
+        - name: past-appt-limit
+          in: query
+          description: number of past appointments to return in query, starting at the date given in the "le" portion of the start parameter and working backwards
+          required: true
+          schema:
+            type: string
+            default: '5'
+            enum:
+              - '5'
       responses:
         200:
           description: OK
