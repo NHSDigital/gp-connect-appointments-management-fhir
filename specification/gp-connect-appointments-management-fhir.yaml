@@ -179,13 +179,11 @@ paths:
               - free
         - name: limit
           in: query
-          description: number of slots to return in query, starting at the date given in the start parameter ad working forwards
+          description: number of slots to return in query, starting at the date given in the start parameter and working forwards. Parameter is optional, if no value supplied then no limits are applied.
           required: true
           schema:
             type: string
-            default: '5'
-            enum:
-              - '5'
+            example: '5'
         - name: _include
           in: query
           description: Include
@@ -576,13 +574,19 @@ paths:
             default: ["ge2020-05-09","le2020-05-19"]
         - name: past-appt-limit
           in: query
-          description: number of past appointments to return in query, starting at the date given in the "le" portion of the start parameter and working backwards
-          required: true
+          description: Number of past appointments to return in query, starting at the date given in the "le" portion of the start parameter and working backwards. Parameter is optional, if no value supplied then no limits are applied.
+          required: false
           schema:
             type: string
-            default: '5'
-            enum:
-              - '5'
+            example: '5'
+        - name: status
+          in: query
+          description: >
+            The type of status to search: you can find valid values [here](https://simplifier.net/packages/hl7.fhir.r4.core/4.0.1/files/83480)
+          required: false
+          schema:
+            type: string
+            example: 'proposed'
       responses:
         200:
           description: OK
