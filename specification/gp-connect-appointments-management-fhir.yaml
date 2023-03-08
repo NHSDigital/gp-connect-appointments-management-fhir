@@ -177,13 +177,6 @@ paths:
             default: free
             enum:
               - free
-        - name: limit
-          in: query
-          description: number of slots to return in query, starting at the date given in the start parameter and working forwards. Parameter is optional, if no value supplied then no limits are applied.
-          required: false
-          schema:
-            type: string
-            example: '5'
         - name: _include
           in: query
           description: Include
