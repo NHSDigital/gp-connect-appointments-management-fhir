@@ -185,8 +185,6 @@ x-spec-publication:
         path: /FHIR/STU3/Appointment/{id}
       - method: PUT
         path: /FHIR/STU3/Appointment/{id}
-      - method: GET
-        path: /FHIR/STU3/Patient/{identifier}
 
 servers:
   - description: Sandbox environment.
@@ -237,19 +235,25 @@ paths:
             default: Slot:schedule
             enum:
               - Slot:schedule
-        - name: _include:recurse
-          in: query
-          description: Include recurse
-          style: form
-          explode: true
+        - in: query
+          name: _include:recurse=Schedule:actor:Practitioner
+          description: Schedule:actor:Practitioner Include Practitioner resources referenced in Schedule:actor
           schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - Schedule:actor:Practitioner
-                - Schedule:actor:Location
-                - Location:managingOrganization
+            type: string
+          required: true
+
+        - in: query
+          name: _include:recurse=Schedule:actor:Location
+          description: Schedule:actor:Location Include Location resources referenced in Schedule:actor
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: _include:recurse=Location:managingOrganization
+          description: Location:managingOrganization Include managingOrganization resources referenced in Location
+          schema:
+            type: string
+          required: true
         - name: searchFilter
           in: query
           description: Search filter
