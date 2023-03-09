@@ -185,8 +185,6 @@ x-spec-publication:
         path: /FHIR/STU3/Appointment/{id}
       - method: PUT
         path: /FHIR/STU3/Appointment/{id}
-      - method: GET
-        path: /FHIR/STU3/Patient/{identifier}
 
 servers:
   - description: Sandbox environment.
