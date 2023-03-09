@@ -131,10 +131,6 @@ x-spec-publication:
       - method: PUT
         path: /FHIR/STU3/Appointment/{id}
       - method: GET
-        path: /FHIR/STU3/Location/{id}
-      - method: GET
-        path: /FHIR/STU3/Practitioner/{id}
-      - method: GET
         path: /FHIR/STU3/Patient/{identifier}
 
 servers:
@@ -349,13 +345,13 @@ paths:
             | HTTP status | Error code                      | Description             |
             | ----------- | ----------                      | -----------             |
             | 400         | INVALID_IDENTIFIER_VALUE           | Invalid identifier value.     |
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
+            | 400         | BAD_REQUEST                      | Submitted request is malformed/invalid. |
             | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
             | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
-            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
-            | 403	  | ACCESS_DENIED	            | Access denied	|
-            | 404	  |NO_RECORD_FOUND		    | No record found |
+            | 400         | NO_ORGANISATION_CONSENT      |Organisation has not provided consent to share data|
+            | 400         | BAD_REQUEST                      | Submitted request is malformed/invalid.|
+            | 403    | ACCESS_DENIED              | Access denied  |
+            | 404    |NO_RECORD_FOUND        | No record found |
             | 422| INVALID RESOURCE| Submitted resource is invalid|
             |422 | INVALID PARAMETER| Submitted parameter is invalid
             |
@@ -506,18 +502,18 @@ paths:
             | HTTP status | Error code                      | Description             |
             | ----------- | ----------                      | -----------             |
             | 400         | INVALID_IDENTIFIER_VA           | Invalid identifier value.     |
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
+            | 400         | BAD_REQUEST                      | Submitted request is malformed/invalid. |
             | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
             | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
-            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
+            | 400         | NO_ORGANISATION_CONSENT      |Organisation has not provided consent to share data|
+            | 400         | BAD_REQUEST                      | Submitted request is malformed/invalid.|
             | 400   | INVALID_NHS_NUMBER| Nhs Number Invalid.
-            | 403	  | ACCESS_DENIED	            | Access denied	|
-            | 404	  |ORGANISATION_NOT_FOUND		    | Organisation record not found|
-            | 404	  |PRACTITIONER_NOT_FOUND		    | Practitioner record not found |
-            | 404	  |PATIENT_NOT_FOUND		    | Patient record not found |
-            | 404	  |NO_RECORD_FOUND		    | No record found |
-            | 409	  |DUPLICATE_REJECTED	    | Create would lead to creation of a duplicate resource |
+            | 403    | ACCESS_DENIED              | Access denied  |
+            | 404    |ORGANISATION_NOT_FOUND        | Organisation record not found|
+            | 404    |PRACTITIONER_NOT_FOUND        | Practitioner record not found |
+            | 404    |PATIENT_NOT_FOUND        | Patient record not found |
+            | 404    |NO_RECORD_FOUND        | No record found |
+            | 409    |DUPLICATE_REJECTED      | Create would lead to creation of a duplicate resource |
           content:
             application/fhir+json:
               schema:
@@ -565,6 +561,18 @@ paths:
             items:
               type: string
             default: ["ge2020-05-09","le2020-05-19"]
+        - name: _include:recurse
+          in: query
+          description: Include recurse
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - Appointment:actor:Practitioner
+                - Appointment:actor:Location
         - name: past-appt-limit
           in: query
           description: Number of past appointments to return in query, starting at the date given in the "le" portion of the start parameter and working backwards. Parameter is optional, if no value supplied then no limits are applied.
@@ -715,13 +723,13 @@ paths:
             | HTTP status | Error code                      | Description             |
             | ----------- | ----------                      | -----------             |
             | 400         | INVALID_IDENTIFIER_VA           | Invalid identifier value.     |
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
+            | 400         | BAD_REQUEST                      | Submitted request is malformed/invalid. |
             | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
             | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
-            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
-            | 403	  | ACCESS_DENIED	            | Access denied	|
-            | 404	  |NO_RECORD_FOUND		    | No record found |
+            | 400         | NO_ORGANISATION_CONSENT      |Organisation has not provided consent to share data|
+            | 400         | BAD_REQUEST                      | Submitted request is malformed/invalid.|
+            | 403    | ACCESS_DENIED              | Access denied  |
+            | 404    |NO_RECORD_FOUND        | No record found |
           content:
             application/fhir+json:
               schema:
@@ -758,6 +766,18 @@ paths:
           schema:
             type: string
           example: '1'
+        - name: _include:recurse
+          in: query
+          description: Include recurse
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - Appointment:actor:Practitioner
+                - Appointment:actor:Location
       responses:
         200:
           description: OK
@@ -829,13 +849,13 @@ paths:
             | HTTP status | Error code                      | Description             |
             | ----------- | ----------                      | -----------             |
             | 400         | INVALID_IDENTIFIER_VA           | Invalid identifier value.     |
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
+            | 400         | BAD_REQUEST                      | Submitted request is malformed/invalid. |
             | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
             | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
-            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
-            | 403	  | ACCESS_DENIED	            | Access denied	|
-            | 404	  |NO_RECORD_FOUND		    | No record found |
+            | 400         | NO_ORGANISATION_CONSENT      |Organisation has not provided consent to share data|
+            | 400         | BAD_REQUEST                      | Submitted request is malformed/invalid.|
+            | 403    | ACCESS_DENIED              | Access denied  |
+            | 404    |NO_RECORD_FOUND        | No record found |
           content:
             application/fhir+json:
               schema:
@@ -975,171 +995,13 @@ paths:
             | HTTP status | Error code                      | Description             |
             | ----------- | ----------                      | -----------             |
             | 400         | INVALID_IDENTIFIER_VA           | Invalid identifier value.     |
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
+            | 400         | BAD_REQUEST                      | Submitted request is malformed/invalid. |
             | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
             | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
-            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
-            | 403	  | ACCESS_DENIED	            | Access denied	|
-            | 404	  |NO_RECORD_FOUND		    | No record found |
-          content:
-            application/fhir+json:
-              schema:
-                type: object
-                description:  Link to GPConnect-OperationOutcome-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-OperationOutcome-1?version=current)
-              examples:
-                example:
-                  value:
-                    resourceType: OperationOutcome
-                    meta:
-                      profile:
-                        - https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
-                    issue:
-                    - severity: error
-                      code: not-found
-                      details:
-                          coding:
-                            - system: https://fhir.nhs.uk/STU3/ValueSet/Spine-ErrorOrWarningCode-1
-                              code: NO_RECORD_FOUND
-                              display: No record found
-
-
-  /FHIR/STU3/Practitioner/{id}:
-    get:
-      summary: Get details of a practitioner
-      description: Get a detailed view of a practitioner using the practitioner's id.
-      parameters:
-        - $ref: "#/components/parameters/BearerAuthorization"
-        - $ref: "#/components/parameters/CorrelationID"
-        - $ref: "#/components/parameters/RequestID"
-        - name: id
-          in: path
-          description: Practitioner logical identifier
-          required: true
-          schema:
-            type: string
-          example: '1'
-      responses:
-        200:
-          description: OK
-          content:
-            application/fhir+json:
-              schema:
-                type: object
-                description: Link to Profile--CareConnect-GPC-Practitioner-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--CareConnect-GPC-Practitioner-1?version=current)
-              examples:
-                example:
-                  value:
-                    resourceType: Practitioner
-                    id: '15'
-                    meta:
-                      versionId: '636064088099800115'
-                      profile:
-                        - https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Practitioner-1
-                    identifier:
-                      - system: https://fhir.nhs.uk/Id/sds-user-id
-                        value: '111122223333'
-                    name:
-                      - family: Black
-                        given:
-                          - Sarah
-                        prefix:
-                          - Mrs
-                    gender: female
-
-        4XX:
-          description: |
-            An error occurred as follows:
-            | HTTP status | Error code                      | Description             |
-            | ----------- | ----------                      | -----------             |
-            | 400         | INVALID_IDENTIFIER_VA           | Invalid identifier value.     |
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
-            | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
-            | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
-            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
-            | 403	  | ACCESS_DENIED	            | Access denied	|
-            | 404	  |NO_RECORD_FOUND		    | No record found |
-          content:
-            application/fhir+json:
-              schema:
-                type: object
-                description:  Link to GPConnect-OperationOutcome-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--GPConnect-OperationOutcome-1?version=current)
-              examples:
-                example:
-                  value:
-                    resourceType: OperationOutcome
-                    meta:
-                      profile:
-                        - https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-OperationOutcome-1
-                    issue:
-                    - severity: error
-                      code: not-found
-                      details:
-                          coding:
-                            - system: https://fhir.nhs.uk/STU3/ValueSet/Spine-ErrorOrWarningCode-1
-                              code: NO_RECORD_FOUND
-                              display: No record found
-
-  /FHIR/STU3/Location/{id}:
-    get:
-      summary: Get details of a location
-      description: Get a detailed view of a location using the Location's id.
-      parameters:
-        - $ref: "#/components/parameters/BearerAuthorization"
-        - $ref: "#/components/parameters/CorrelationID"
-        - $ref: "#/components/parameters/RequestID"
-        - name: id
-          in: path
-          description: Location logical identifier
-          required: true
-          schema:
-            type: string
-          example: '1'
-      responses:
-        200:
-          description: OK
-          content:
-            application/fhir+json:
-              schema:
-                type: object
-                description: Link to Profile--CareConnect-GPC-Location-1 resource population guidance [Here](https://simplifier.net/guide/gpconnect-data-model/Home/FHIR-Assets/All-assets/Profiles/Profile--CareConnect-GPC-Location-1?version=current)
-              examples:
-                example:
-                  value:
-                    resourceType: Location
-                    id: '17'
-                    meta:
-                      versionId: '636064088100870233'
-                      profile:
-                        - https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Location-1
-                    name: Trevelyan Surgery
-                    address:
-                      - line:
-                          - Trevelyan Square
-                          - Boar Ln
-                        city: Leeds
-                        district: West Yorkshire
-                        postalCode: LS1 6AE
-                    telecom:
-                      - system: phone
-                        value: '03003035678'
-                        use: work
-                    managingOrganization:
-                      reference: Organization/14
-        4XX:
-          description: |
-            An error occurred as follows:
-            | HTTP status | Error code                      | Description             |
-            | ----------- | ----------                      | -----------             |
-            | 400         | INVALID_IDENTIFIER_VA           | Invalid identifier value.     |
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
-            | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
-            | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
-            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
-            | 403	  | ACCESS_DENIED	            | Access denied	|
-            | 404	  |NO_RECORD_FOUND		    | No record found |
+            | 400         | NO_ORGANISATION_CONSENT      |Organisation has not provided consent to share data|
+            | 400         | BAD_REQUEST                      | Submitted request is malformed/invalid.|
+            | 403    | ACCESS_DENIED              | Access denied  |
+            | 404    |NO_RECORD_FOUND        | No record found |
           content:
             application/fhir+json:
               schema:
@@ -1162,7 +1024,7 @@ paths:
                               display: No record found
   /FHIR/STU3/Patient/{identifier}:
     get:
-      summary: Get details of a patient record using the patient's nhs number
+      summary: Get details of a patient using the patient's nhs number
       description: Get a detailed view of a patient using the patient's nhs number.
       parameters:
         - $ref: "#/components/parameters/BearerAuthorization"
@@ -1255,13 +1117,13 @@ paths:
             | HTTP status | Error code                      | Description             |
             | ----------- | ----------                      | -----------             |
             | 400         | INVALID_IDENTIFIER_VA           | Invalid identifier value.     |
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid. |
+            | 400         | BAD_REQUEST                      | Submitted request is malformed/invalid. |
             | 400         | VALIDATION_ERROR                | This is the "default" error thrown when no others are applicable.                                                   |
             | 400         | UNSUPPORTED_VALUE               | There was an unsupported value in the request. |
-            | 400         | NO_ORGANISATION_CONSENT	    |Organisation has not provided consent to share data|
-            | 400         | BAD_REQUEST	                    | Submitted request is malformed/invalid.|
-            | 403	  | ACCESS_DENIED	            | Access denied	|
-            | 404	  |NO_RECORD_FOUND		    | No record found |
+            | 400         | NO_ORGANISATION_CONSENT      |Organisation has not provided consent to share data|
+            | 400         | BAD_REQUEST                      | Submitted request is malformed/invalid.|
+            | 403    | ACCESS_DENIED              | Access denied  |
+            | 404    |NO_RECORD_FOUND        | No record found |
           content:
             application/fhir+json:
               schema:
