@@ -131,10 +131,6 @@ x-spec-publication:
       - method: PUT
         path: /FHIR/STU3/Appointment/{id}
       - method: GET
-        path: /FHIR/STU3/Location/{id}
-      - method: GET
-        path: /FHIR/STU3/Practitioner/{id}
-      - method: GET
         path: /FHIR/STU3/Patient/{identifier}
 
 servers:
