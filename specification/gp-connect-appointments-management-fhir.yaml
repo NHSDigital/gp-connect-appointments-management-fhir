@@ -623,18 +623,18 @@ paths:
             items:
               type: string
             default: ["ge2020-05-09","le2020-05-19"]
-        - name: _include:recurse
-          in: query
-          description: Include recurse
-          style: form
-          explode: true
+        - in: query
+          name: _include:recurse=Appointment:actor:Practitioner
+          description: Appointment:actor:Practitioner Include Practitioner resources referenced in Appointment:actor
           schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - Appointment:actor:Practitioner
-                - Appointment:actor:Location
+            type: string
+          required: true
+        - in: query
+          name: _include:recurse=Appointment:actor:Location
+          description: Appointment:actor:Location Include Location resources referenced in Appointment:actor
+          schema:
+            type: string
+          required: true
         - name: past-appt-limit
           in: query
           description: Number of past appointments to return in query, starting at the date given in the "le" portion of the start parameter and working backwards. Parameter is optional, if no value supplied then no limits are applied.
@@ -867,18 +867,18 @@ paths:
           schema:
             type: string
           example: '1'
-        - name: _include:recurse
-          in: query
-          description: Include recurse
-          style: form
-          explode: true
+        - in: query
+          name: _include:recurse=Appointment:actor:Practitioner
+          description: Appointment:actor:Practitioner Include Practitioner resources referenced in Appointment:actor
           schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - Appointment:actor:Practitioner
-                - Appointment:actor:Location
+            type: string
+          required: true
+        - in: query
+          name: _include:recurse=Appointment:actor:Location
+          description: Appointment:actor:Location Include Location resources referenced in Appointment:actor
+          schema:
+            type: string
+          required: true
       responses:
         200:
           description: OK
