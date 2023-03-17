@@ -46,5 +46,5 @@ extends:
         depends_on:
           - internal_qa
           - internal_qa_sandbox
-          post_deploy:
-            - template: ./templates/run-tests.yml
+        post_deploy:
+          - template: ./templates/run-tests.yml
