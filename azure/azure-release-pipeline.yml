@@ -40,11 +40,12 @@ extends:
           - template: ./templates/run-tests.yml
       - environment: sandbox
         proxy_path: sandbox
+        depends_on:
+          - internal_dev_sandbox
         post_deploy:
           - template: ./templates/run-tests.yml
       - environment: int
         depends_on:
-          - internal_qa
-          - internal_qa_sandbox
+          - internal_dev
         post_deploy:
           - template: ./templates/run-tests.yml
