@@ -188,14 +188,14 @@ x-spec-publication:
 
 servers:
   - description: Sandbox environment.
-    url: https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir
+    url: https://sandbox.api.service.nhs.uk/gp-connect-appointments-management-fhir/FHIR/STU3/
   - description: Integration test environment.
-    url: https://int.api.service.nhs.uk/gp-connect-appointments-management-fhir
+    url: https://int.api.service.nhs.uk/gp-connect-appointments-management-fhir/FHIR/STU3/
   - description: Production environment.
-    url: https://api.service.nhs.uk/gp-connect-appointments-management-fhir
+    url: https://api.service.nhs.uk/gp-connect-appointments-management-fhir/FHIR/STU3/
 
 paths:
-  /FHIR/STU3/Slot:
+  /Slot:
     get:
       summary: Search for free slots
       description: Search the patient's GP system for free slots that are available for appointment bookings.
@@ -435,7 +435,7 @@ paths:
                             - system: https://fhir.nhs.uk/STU3/ValueSet/Spine-ErrorOrWarningCode-1
                               code: ACCESS_DENIED
                               display: Access Denied
-  /FHIR/STU3/Appointment:
+  /Appointment:
     post:
       summary: Book an appointment
       description: Book an appointment using the patient details and a retreived slot details.
@@ -597,7 +597,7 @@ paths:
                               code: NO_RECORD_FOUND
                               display: No record found
       x-codegen-request-body-name: body
-  /FHIR/STU3/Patient/{id}/Appointment:
+  /Patient/{id}/Appointment:
     get:
       summary: Read a patient's appointments
       description: Retrieve all appointments for the patient within a defined time-frame.
@@ -852,7 +852,7 @@ paths:
                               code: NO_RECORD_FOUND
                               display: No record found
 
-  /FHIR/STU3/Appointment/{id}:
+  /Appointment/{id}:
     get:
       summary: Get details of a single appointment
       description: Get a detailed view of a single patient appointment using the appointment id.

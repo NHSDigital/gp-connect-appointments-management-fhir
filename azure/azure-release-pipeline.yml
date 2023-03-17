@@ -34,8 +34,6 @@ extends:
       - environment: internal-dev
         post_deploy:
           - template: ./templates/run-tests.yml
-            parameters:
-              full: true
       - environment: internal-dev-sandbox
         proxy_path: sandbox
         post_deploy:
@@ -44,12 +42,9 @@ extends:
         proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-tests.yml
-    # # Enable int environment when ready by uncommenting:
       - environment: int
         depends_on:
           - internal_qa
           - internal_qa_sandbox
-    #     post_deploy:
-    #       - template: ./templates/run-tests.yml
-    #         parameters:
-    #           full: true
+          post_deploy:
+            - template: ./templates/run-tests.yml
