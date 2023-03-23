@@ -1142,7 +1142,10 @@ paths:
             | 400         | NO_ORGANISATION_CONSENT | Organisation has not provided consent to share data              |
             | 400         | BAD_REQUEST             | Submitted request is malformed/invalid                           |
             | 403         | ACCESS_DENIED	          | Access denied                                                    |
+            | 403         | ACCESS_DENIED	          | Practice has disabled cancellation                               |
             | 404         | NO_RECORD_FOUND         | No record found                                                  |
+            | 409         | ACCESS_DENIED	          | Cannot cancel appointment                                        |
+            | 461         | ACCESS_DENIED	          | Too late to cancel appointment                                   |
           content:
             application/fhir+json:
               schema:
