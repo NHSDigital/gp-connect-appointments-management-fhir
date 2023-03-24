@@ -259,10 +259,7 @@ paths:
             items:
               type: string
               enum:
-                - >-
-                  https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1|gp-practice
-                - >-
-                  https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1|gp-practice
+                - https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1|gp-practice
                 - https://fhir.nhs.uk/Id/ods-organization-code|A20047
       responses:
         200:
