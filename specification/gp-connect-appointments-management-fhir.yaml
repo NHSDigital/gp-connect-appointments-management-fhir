@@ -236,24 +236,19 @@ paths:
             enum:
               - Slot:schedule
         - in: query
-          name: _include:recurse=Schedule:actor:Practitioner
-          description: Schedule:actor:Practitioner Include Practitioner resources referenced in Schedule:actor
+          name: _include:recurse
+          description: |
+            Schedule:actor:Practitioner Include Practitioner resources referenced in Schedule:actor
+            Schedule:actor:Location Include Location resources referenced in Schedule:actor
+            Location:managingOrganization Include managingOrganization resources referenced in Location
           schema:
-            type: string
-          required: true
-
-        - in: query
-          name: _include:recurse=Schedule:actor:Location
-          description: Schedule:actor:Location Include Location resources referenced in Schedule:actor
-          schema:
-            type: string
-          required: true
-        - in: query
-          name: _include:recurse=Location:managingOrganization
-          description: Location:managingOrganization Include managingOrganization resources referenced in Location
-          schema:
-            type: string
-          required: true
+            type: array
+            items:
+              type: string
+              enum:
+                - Schedule:actor:Practitioner
+                - Schedule:actor:Location
+                - Location:managingOrganization
         - name: searchFilter
           in: query
           description: Search filter
@@ -264,10 +259,7 @@ paths:
             items:
               type: string
               enum:
-                - >-
-                  https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1|gp-practice
-                - >-
-                  https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1|gp-practice
+                - https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1|gp-practice
                 - https://fhir.nhs.uk/Id/ods-organization-code|A20047
       responses:
         200:
@@ -624,17 +616,17 @@ paths:
               type: string
             default: ["ge2020-05-09","le2020-05-19"]
         - in: query
-          name: _include:recurse=Appointment:actor:Practitioner
-          description: Appointment:actor:Practitioner Include Practitioner resources referenced in Appointment:actor
+          name: _include:recurse
+          description: |
+            Appointment:actor:Practitioner Include Practitioner resources referenced in Appointment:actor
+            Appointment:actor:Location Include Location resources referenced in Appointment:actor
           schema:
-            type: string
-          required: true
-        - in: query
-          name: _include:recurse=Appointment:actor:Location
-          description: Appointment:actor:Location Include Location resources referenced in Appointment:actor
-          schema:
-            type: string
-          required: true
+            type: array
+            items:
+              type: string
+              enum:
+                - Appointment:actor:Practitioner
+                - Appointment:actor:Location
         - name: past-appt-limit
           in: query
           description: Number of past appointments to return in query, starting at the date given in the "le" portion of the start parameter and working backwards. Parameter is optional, if no value supplied then no limits are applied.
@@ -868,17 +860,17 @@ paths:
             type: string
           example: '1'
         - in: query
-          name: _include:recurse=Appointment:actor:Practitioner
-          description: Appointment:actor:Practitioner Include Practitioner resources referenced in Appointment:actor
+          name: _include:recurse
+          description: |
+            Appointment:actor:Practitioner Include Practitioner resources referenced in Appointment:actor
+            Appointment:actor:Location Include Location resources referenced in Appointment:actor
           schema:
-            type: string
-          required: true
-        - in: query
-          name: _include:recurse=Appointment:actor:Location
-          description: Appointment:actor:Location Include Location resources referenced in Appointment:actor
-          schema:
-            type: string
-          required: true
+            type: array
+            items:
+              type: string
+              enum:
+                - Appointment:actor:Practitioner
+                - Appointment:actor:Location
       responses:
         200:
           description: OK
