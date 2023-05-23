@@ -1,12 +1,10 @@
 -include .env
 
-interactionId=$(environment)
-
 aws_profile = apim-dev
 tf_cmd = AWS_PROFILE=$(aws_profile) terraform
 
-project_name = gp-connect-prescriptions-management-fhir
-project_short_name = gcupf
+project_name = gp-connect-appointments-management-fhir
+project_short_name = gcamf
 state_bucket = $(project_name)-terraform-state
 tf_state= -backend-config="bucket=$(state_bucket)"
 

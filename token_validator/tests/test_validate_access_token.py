@@ -122,9 +122,9 @@ def get_access_token(environment, client_credentials):
         private_key = key.read()
 
     data = {
-        "client_id": "gpconnect-pfs-user-permissions",
+        "client_id": "gp-connect-appointments-management-fhir",
         "client_assertion": encode_jwt(
-            client_id="gpconnect-pfs-user-permissions",
+            client_id="gp-connect-appointments-management-fhir",
             audience=url,
             jwt_kid="test-1",
             jwt_private_key=private_key
@@ -134,7 +134,7 @@ def get_access_token(environment, client_credentials):
         "subject_token_type": "urn:ietf:params:oauth:token-type:access_token",
         "subject_issuer": "nhs-login-mock-internal-dev",
         "grant_type": "urn:ietf:params:oauth:grant-type:token-exchange",
-        "audience": "gpconnect-pfs-user-permissions"
+        "audience": "gp-connect-appointments-management-fhir"
     }
     resp = requests.post(url, data=data)
     if resp.status_code != 200:
@@ -156,9 +156,9 @@ def invalidate_token(token, environment):
         "https://identity.ptl.api.platform.nhs.uk/auth/" +
         f"realms/gpconnect-pfs-mock-{environment}/protocol/openid-connect/revoke",
         data={
-            "client_id": "gpconnect-pfs-user-permissions",
+            "client_id": "gp-connect-appointments-management-fhir",
             "client_assertion": encode_jwt(
-                client_id="gpconnect-pfs-user-permissions",
+                client_id="gp-connect-appointments-management-fhir",
                 audience=url,
                 jwt_kid="test-1",
                 jwt_private_key=private_key

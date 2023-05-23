@@ -1,4 +1,4 @@
-project_name = gp-connect-prescriptions-management-fhir
+project_name = gp-connect-appointments-management-fhir
 
 build: spec
 	docker build -t $(project_name) -f Dockerfile .
