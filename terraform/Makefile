@@ -20,6 +20,7 @@ plan: workspace
 	 $(tf_cmd) plan $(tf_vars) -var="client_id=$(client_id)" -var="client_secret=$(client_secret)" -var="keycloak_environment=$(keycloak_environment)"
 
 apply: workspace
+	make publish -C ..
 	$(tf_cmd) apply $(tf_vars) -auto-approve -var="client_id=$(client_id)" -var="client_secret=$(client_secret)" -var="keycloak_environment=$(keycloak_environment)"
 
 clean:
@@ -32,3 +33,8 @@ destroy: workspace
 
 output:
 	$(tf_cmd) output -raw $(name)
+
+lock-provider:
+	# Run this only when you install a new terraform provider. This will generate sha code in lock file for all platform
+	echo "This may take a while. Be patient!"
+	$(tf_cmd) providers lock -platform=darwin_arm64 -platform=darwin_amd64 -platform=linux_amd64 -platform=windows_amd64
