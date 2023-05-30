@@ -22,8 +22,8 @@ def test_wait_for_ping(nhsd_apim_proxy_url):
     deployed_commitId = resp.json().get("commitId")
 
     while (deployed_commitId != getenv('SOURCE_COMMIT_ID')
-            and retries <= 30
-            and resp.status_code == 200):
+           and retries <= 30
+           and resp.status_code == 200):
         resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
         deployed_commitId = resp.json().get("commitId")
         retries += 1
@@ -52,9 +52,9 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     deployed_commitId = resp.json().get("commitId")
 
     while (deployed_commitId != getenv('SOURCE_COMMIT_ID')
-            and retries <= 30
-            and resp.status_code == 200
-            and resp.json().get("version")):
+           and retries <= 30
+           and resp.status_code == 200
+           and resp.json().get("version")):
         resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers)
         deployed_commitId = resp.json().get("commitId")
         retries += 1
@@ -87,6 +87,7 @@ def test_nhs_login_p9(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
     assert resp.status_code == 200
 
+
 @pytest.mark.auth
 @pytest.mark.integration
 @pytest.mark.nhsd_apim_authorization(
@@ -96,7 +97,6 @@ def test_nhs_login_p9(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
         "login_form": {"username": "656005750104"}
     }
 )
-
 def test_prism_returns_external_file(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     headers = {
         "accept": "*/*",
