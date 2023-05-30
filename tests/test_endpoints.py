@@ -6,6 +6,7 @@ for more ideas on how to test the authorization of your API.
 import pytest
 import requests
 from os import getenv
+from example_loader import load_example
 
 
 @pytest.mark.smoketest
@@ -85,3 +86,29 @@ def test_app_level0(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 def test_nhs_login_p9(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
     assert resp.status_code == 200
+
+@pytest.mark.auth
+@pytest.mark.integration
+@pytest.mark.nhsd_apim_authorization(
+    {
+        "access": "healthcare_worker",
+        "level": "aal3",
+        "login_form": {"username": "656005750104"}
+    }
+)
+
+def test_prism_returns_external_file(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    headers = {
+        "accept": "*/*",
+        "X-Correlation-ID": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA",
+        "X-Request-ID": "60E0B220-8136-4CA5-AE46-1D97EF59D068"
+    }
+    headers.update(nhsd_apim_auth_headers)
+
+    resp = requests.get(
+        f"{nhsd_apim_proxy_url}/Patient/9000000009/MedicationStatement",
+        headers=headers
+    )
+    expected_response = load_example("gp-connect-appointments-management-fhir.yaml")
+    print(expected_response)
+    assert resp.json() == expected_response.get("value")
