@@ -6,7 +6,7 @@ for more ideas on how to test the authorization of your API.
 import pytest
 import requests
 from os import getenv
-from example_loader import load_example
+# from example_loader import load_example
 
 
 @pytest.mark.smoketest
