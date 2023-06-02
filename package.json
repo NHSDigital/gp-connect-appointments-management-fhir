@@ -11,7 +11,7 @@
   "license": "MIT",
   "homepage": "https://github.com/NHSDigital/gp-connect-appointments-management-fhir",
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.5.1",
+    "@openapitools/openapi-generator-cli": "^2.6.0",
     "license-checker": "^25.0.1"
   }
 }
