@@ -71,7 +71,6 @@ apigee:
           - {{ NAME }}
 {% if ENV.has_mock_auth | default(false) %}
           - identity-service-mock-{{ ENV.name }}
-{% else %}
           - identity-service-{{ ENV.name }}
 {% endif %}
         scopes:
