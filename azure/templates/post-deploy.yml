@@ -20,6 +20,8 @@ steps:
             - ptl/app-credentials/gp-connect-appointments-management-fhir-testing-app/non-prod/INTROSPECTION_CLIENT_SECRET
             - ptl/app-credentials/gp-connect-appointments-management-fhir-testing-app/non-prod/INTROSPECTION_CLIENT_ID_INT
             - ptl/app-credentials/gp-connect-appointments-management-fhir-testing-app/non-prod/INTROSPECTION_CLIENT_SECRET_INT
+            - ptl/app-credentials/gp-connect-appointments-management-fhir-testing-app/non-prod/INT_CLIENT_ID
+            - ptl/app-credentials/gp-connect-appointments-management-fhir-testing-app/non-prod/INT_CLIENT_SECRET
 
   - bash: |
       make install-python
@@ -95,11 +97,20 @@ steps:
       export JWT_PRIVATE_KEY_ABSOLUTE_PATH="$(Pipeline.Workspace)/secrets/$(JWT_TESTING_PRIVATE_KEY)"
       export client_id="$(INTROSPECTION_CLIENT_ID)"
       export client_secret="$(INTROSPECTION_CLIENT_SECRET)"
+      export APIGEE_APP_ID=e1a73dda-209b-4f31-8c16-57b9d68a8de7
+
       if [[ $APIGEE_ENVIRONMENT =~ .*-*sandbox ]]
       then
+       poetry run pytest -v -m "not nhsd_apim_authorization and not mock_provider_int" --api-name=gp-connect-appointments-management-fhir --proxy-name=$PROXY_NAME -o junit_logging=all --junitxml=test-report.xml
+
+      elif [[ $APIGEE_ENVIRONMENT == "int" ]]
+      then
+       export DEFAULT_CLIENT_ID="$(INT_CLIENT_ID)"
+       export DEFAULT_CLIENT_SECRET="$(INT_CLIENT_SECRET)"
        poetry run pytest -v -m "not nhsd_apim_authorization" --api-name=gp-connect-appointments-management-fhir --proxy-name=$PROXY_NAME -o junit_logging=all --junitxml=test-report.xml
+
       else
-       poetry run pytest -v --api-name=gp-connect-appointments-management-fhir --proxy-name=$PROXY_NAME -o junit_logging=all --junitxml=test-report.xml
+       poetry run pytest -v -m "not mock_provider_int" --api-name=gp-connect-appointments-management-fhir --proxy-name=$PROXY_NAME -o junit_logging=all --junitxml=test-report.xml
       fi
     workingDirectory: "$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/tests"
     displayName: Run full test suite
