@@ -122,6 +122,10 @@ info:
 
     For more details on sandbox testing, or to try out the sandbox using our
     "Try this API" feature, see the documentation for each endpoint.
+    
+    Alternatively, you can try out the sandbox using our Postman collection:
+    
+    [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/23494791-85645b5a-6ad4-48f1-9509-8118a8cb6fb7?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D23494791-85645b5a-6ad4-48f1-9509-8118a8cb6fb7%26entityType%3Dcollection%26workspaceId%3De0e123ef-5780-42f5-bae8-23b5785694d0)
 
     ### Integration testing (not yet available)
 
