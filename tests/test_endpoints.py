@@ -31,15 +31,9 @@ def test_wait_for_ping(proxy_url):
     deployed_commitId = resp.json().get("commitId")
 
     while (deployed_commitId != getenv('SOURCE_COMMIT_ID')
-<<<<<<< HEAD
-           and retries <= 30
-           and resp.status_code == 200):
-        resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
-=======
             and retries <= 30
             and resp.status_code == 200):
         resp = requests.get(f"{proxy_url}/_ping")
->>>>>>> master
         deployed_commitId = resp.json().get("commitId")
         retries += 1
 
