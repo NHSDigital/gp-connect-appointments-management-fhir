@@ -9,6 +9,8 @@ newman/
 .idea
 .DS_Store
 .#*
+**/.terraform
+**/.env
 
 __pycache__/
 .envrc
