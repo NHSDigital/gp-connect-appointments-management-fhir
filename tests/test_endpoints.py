@@ -78,9 +78,14 @@ def test_wait_for_status(proxy_url):
 
 
 @pytest.mark.auth
+@pytest.mark.integration
+@pytest.mark.user_restricted_separate_nhs_login
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level0"})
-def test_app_level0(proxy_url, nhsd_apim_auth_headers):
-    resp = requests.get(f"{proxy_url}", headers=nhsd_apim_auth_headers)
+def test_app_level0(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    headers = {"Interaction-ID": "urn:nhs:names:services:gpconnect:fhir:operation:gpc.getstructuredrecord-1"}
+    headers.update(nhsd_apim_auth_headers)
+
+    resp = requests.get(f"{nhsd_apim_proxy_url}/Slot", headers=headers)
     assert resp.status_code == 401  # unauthorized
 
 
@@ -91,6 +96,23 @@ def test_app_level0(proxy_url, nhsd_apim_auth_headers):
         "login_form": {"username": "P9"},
     }
 )
-def test_nhs_login_p9(proxy_url, nhsd_apim_auth_headers):
-    resp = requests.get(f"{proxy_url}", headers=nhsd_apim_auth_headers)
+def test_nhs_login_p9(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    headers = {
+        "Interaction-ID": "urn:nhs:names:services:gpconnect:fhir:operation:gpc.getstructuredrecord-1",
+        "X-Request-ID": "60E0B220-8136-4CA5-AE46-1D97EF59D068",
+    }
+    params = {
+        'start': 'ge2020-05-09',
+        'end': 'le2020-05-10',
+        'status': 'free',
+        '_include': 'Slot:schedule'
+    }
+    headers.update(nhsd_apim_auth_headers)
+
+    headers.update(nhsd_apim_auth_headers)
+    resp = requests.get(
+        f"{nhsd_apim_proxy_url}/Slot",
+        headers=headers,
+        params=params
+    )
     assert resp.status_code == 200

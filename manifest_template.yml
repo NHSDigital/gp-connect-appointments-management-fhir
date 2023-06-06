@@ -69,9 +69,10 @@ apigee:
         environments: [ {{ ENV.name }} ]
         proxies:
           - {{ NAME }}
-          - identity-service-{{ ENV.name }}
 {% if ENV.has_mock_auth | default(false) %}
           - identity-service-mock-{{ ENV.name }}
+{% else %}
+          - identity-service-{{ ENV.name }}
 {% endif %}
         scopes:
           - 'urn:nhsd:apim:user-nhs-login:P9:{{ SERVICE_NAME }}'
