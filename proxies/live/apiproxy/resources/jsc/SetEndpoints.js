@@ -21,7 +21,7 @@ context.setVariable("GPCAuthHostpath",values["pathname"])
 if (endpoint) {
   url = endpoint + pathSuffix
   if (queryString !== "") {
-    url = url + queryString
+    url = url + '?' + queryString
   }
   context.setVariable("target.url", url)
 
