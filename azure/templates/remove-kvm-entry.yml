@@ -32,5 +32,5 @@ steps:
   - bash: |
       PR_NO=${{ parameters.workspace_tag }}
       source .venv/bin/activate
-      python scripts/apigee_kvm.py --env internal-dev --access-token $(secret.AccessToken) delete gp-connect-appointments-management-fhir-endpoints-pr-$PR_NO
+      python scripts/apigee_kvm.py --env internal-dev --access-token $(secret.AccessToken) delete gp-connect-appointments-management-endpoints-pr-$PR_NO
     displayName: Update endpoints KVM
