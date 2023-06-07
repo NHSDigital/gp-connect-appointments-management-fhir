@@ -6,6 +6,8 @@ RUN apk add jq
 COPY "gp-connect-appointments-management-fhir.json" ./
 #Copyign HeslthStatus OAS file in container
 COPY "HealthStatusEndpoint.json" ./
+#Copying whole specification directory , to get inline examples and schemas
+COPY ./specification ./specification
 #Adding Health status endpoint to main spec file
 RUN jq ".paths+=$(cat HealthStatusEndpoint.json)" gp-connect-appointments-management-fhir.json > updated-spec.json
 

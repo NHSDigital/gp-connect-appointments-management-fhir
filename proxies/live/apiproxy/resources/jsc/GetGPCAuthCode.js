@@ -6,7 +6,7 @@ function json_tryparse(raw) {
         return raw;
     }
   }
-  
+
   var respContent=context.getVariable('GPCPFSAuthResponse.content');
-  const respObject=json_tryparse(respContent);
+  const respObject=JSON.parse(respContent);
   context.setVariable("request.header.Authorization", respObject["access_token"]);

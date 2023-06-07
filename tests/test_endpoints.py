@@ -7,7 +7,8 @@ import pytest
 import requests
 import os
 from os import getenv
-# from example_loader import load_example
+
+from tests.example_loader import load_example
 
 
 @pytest.fixture()
@@ -119,21 +120,22 @@ def test_nhs_login_p9(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     assert resp.status_code == 200
 
 
+@pytest.mark.smoketest
 @pytest.mark.auth
 @pytest.mark.integration
+@pytest.mark.user_restricted_separate_nhs_login
 @pytest.mark.nhsd_apim_authorization(
     {
         "access": "patient",
         "level": "P9",
-        "login_form": {"username": "9000000009"}
+        "login_form": {"username": "P9"}
     }
 )
 def test_prism_returns_external_file(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-
     headers = {
-        "accept": "application/fhir+json",
+        "accept": "*/*",
         "X-Correlation-ID": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA",
-        "X-Request-ID": "60E0B220-8136-4CA5-AE46-1D97EF59D068",
+        "X-Request-ID": "60E0B220-8136-4CA5-AE46-1D97EF59D068"
     }
     headers.update(nhsd_apim_auth_headers)
 
@@ -141,8 +143,7 @@ def test_prism_returns_external_file(nhsd_apim_proxy_url, nhsd_apim_auth_headers
         f"{nhsd_apim_proxy_url}/Patient/9000000009/Appointment",
         headers=headers
     )
-    print(nhsd_apim_proxy_url, "PROXY URL")
-    print(nhsd_apim_auth_headers, "HEADERS")
-    print(resp.text)
+    print(resp.json(), "I AM THE RESPONSE")
     # expected_response = load_example("gp-connect-appointments-management-fhir.yaml")
-    # assert resp.json() == expected_response.get("value")
+    # assert resp.json() == expected_response
+
