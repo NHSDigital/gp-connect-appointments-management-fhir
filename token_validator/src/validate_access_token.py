@@ -15,7 +15,7 @@ def validate_access_token(keycloak_env: str, client_id: str, client_secret: str,
     token = re.sub(r"Bearer\s|Basic\s", "", incoming_token)
 
     # Get the introspection endpoint from the Keycloak discovery doc
-    discovery_url = f"https://identity.ptl.api.platform.nhs.uk/" \
+    discovery_url = f"https://identity.ptl.api.platform.nhs.uk" \
                     f"/realms/gpconnect-pfs-mock-{keycloak_env}/.well-known/uma2-configuration"
     discovery = requests.get(discovery_url).json()
     introspection_endpoint = discovery.get('introspection_endpoint')
