@@ -19,7 +19,6 @@ keywords = ["healthcare", "uk", "nhs"] #TODO add additional keywords
 python = "^3.8"
 pytest-nhsd-apim = "^3.3.2"
 
-
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7.9"
 black = "^20.8b1"
