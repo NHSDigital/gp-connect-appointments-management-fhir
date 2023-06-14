@@ -7,8 +7,7 @@ import pytest
 import requests
 import os
 from os import getenv
-
-from tests.example_loader import load_example
+# from tests.example_loader import load_example
 
 
 @pytest.fixture()
@@ -147,4 +146,3 @@ def test_prism_returns_external_file(nhsd_apim_proxy_url, nhsd_apim_auth_headers
     print(resp)
     # expected_response = load_example("gp-connect-appointments-management-fhir.yaml")
     # assert resp.json() == expected_response
-
