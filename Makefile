@@ -31,6 +31,7 @@ publish: clean
 	mkdir -p build
 	npm run publish 2> /dev/null
 	cp build/gp-connect-appointments-management-fhir.json mock_provider/
+	cp -r specification mock_provider/specification
 
 #Runs build proxy script
 build-proxy:
