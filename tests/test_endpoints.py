@@ -7,7 +7,7 @@ import pytest
 import requests
 import os
 from os import getenv
-from tests.example_loader import load_example
+# from tests.example_loader import load_example
 
 
 @pytest.fixture()
