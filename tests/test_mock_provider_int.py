@@ -111,10 +111,21 @@ def test_mock_provider_int_happy_path(nhs_login_mock_token):
         "Interaction-ID": "urn:nhs:names:services:gpconnect:fhir:operation:gpc.getstructuredrecord-1",
         "X-Request-ID": "60E0B220-8136-4CA5-AE46-1D97EF59D068",
     }
+    params = {
+        'start': 'ge2020-05-09',
+        'end': 'le2020-05-10',
+        'status': 'free',
+        '_include': 'Slot:schedule'
+    }
+
     base_path = os.getenv("SERVICE_BASE_PATH")
     apigee_env = os.getenv("APIGEE_ENVIRONMENT")
 
     url = f"https://{apigee_env}.api.service.nhs.uk/{base_path}"
-    resp = requests.get(f"{url}/documents/Patient/9000000009", headers=headers)
 
+    resp = requests.get(
+        f"{url}/Slot",
+        headers=headers,
+        params=params
+    )
     assert resp.status_code == 200
