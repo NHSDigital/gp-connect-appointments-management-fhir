@@ -132,7 +132,7 @@ def test_nhs_login_p9(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 )
 def test_prism_returns_external_file(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     headers = {
-        "accept": "*/*",
+        "accept": "application/fhir+json",
         "X-Correlation-ID": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA",
         "X-Request-ID": "60E0B220-8136-4CA5-AE46-1D97EF59D068",
         "Interaction-ID": "urn:nhs:names:services:gpconnect:fhir:operation:gpc.getstructuredrecord-1"
@@ -140,10 +140,10 @@ def test_prism_returns_external_file(nhsd_apim_proxy_url, nhsd_apim_auth_headers
     headers.update(nhsd_apim_auth_headers)
 
     resp = requests.get(
-        f"{nhsd_apim_proxy_url}/Patient/9000000009/Appointment",
+        f"{nhsd_apim_proxy_url}/Patient/9000000009/Appointment?start=ge2020-05-09&start=le2020-05-19",
         headers=headers
     )
     print(resp.text)
     expected_response = load_example("gp-connect-appointments-management-fhir.yaml")
-    # print(expected_response)
+    print(expected_response)
     # assert resp.json() == expected_response
