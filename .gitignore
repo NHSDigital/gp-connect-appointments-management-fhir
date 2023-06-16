@@ -17,6 +17,7 @@ __pycache__/
 .idea/
 .venv/
 
+jwtRS512.key
 smoketest-report.xml
 env
 .dir-locals.el
