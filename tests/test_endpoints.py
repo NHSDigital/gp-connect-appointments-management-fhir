@@ -140,10 +140,9 @@ def test_prism_returns_external_file(nhsd_apim_proxy_url, nhsd_apim_auth_headers
     headers.update(nhsd_apim_auth_headers)
 
     resp = requests.get(
-        f"{nhsd_apim_proxy_url}/Patient/9000000009/Appointment?start=ge2020-05-09&start=le2020-05-19",
+        f"{nhsd_apim_proxy_url}/Appointment/1",
         headers=headers
     )
-    print(resp.text)
-    expected_response = load_example("gp-connect-appointments-management-fhir.yaml")
-    print(expected_response)
-    # assert resp.json() == expected_response
+
+    expected_response = load_example("../specification/examples/single_appointment.yaml")
+    assert resp.json() == expected_response
