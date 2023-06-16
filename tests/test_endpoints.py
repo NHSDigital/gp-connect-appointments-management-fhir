@@ -144,5 +144,5 @@ def test_prism_returns_external_file(nhsd_apim_proxy_url, nhsd_apim_auth_headers
         headers=headers
     )
 
-    expected_response = load_example("../specification/examples/single_appointment.yaml")
+    expected_response = load_example("examples/single_appointment.yaml")
     assert resp.json() == expected_response
