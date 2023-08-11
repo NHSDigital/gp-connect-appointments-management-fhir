@@ -124,7 +124,7 @@ def test_nhs_login_p9(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     {
         "access": "patient",
         "level": "P9",
-        "login_form": {"username": "P9"}
+        "login_form": {"username": "9449305552"}
     }
 )
 def test_prism_returns_external_file(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
