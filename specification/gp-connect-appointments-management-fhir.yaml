@@ -1,8 +1,8 @@
 # This is an OpenAPI Specification (https://swagger.io/specification/)
-# for gp-connect/appointments-management-fhir owned by NHS Digital (https://digital.nhs.uk/)
+# for gp-connect/patient-facing/appointments-management-fhir owned by NHS Digital (https://digital.nhs.uk/)
 openapi: '3.0.0'
 info:
-  title: 'gp-connect/appointments-management-fhir'
+  title: 'gp-connect/patient-facing/appointments-management-fhir'
   version: 'Computed and injected at build time by `scripts/set_version.py`'
   description: |
     ## Overview
@@ -173,7 +173,7 @@ info:
     Once we approve your use case, we support you through the assurance process to go live. We will discuss the assurance process and artefacts with you to help you understand our requirements.
     Start your development work within 6 months of use case approval. If you miss this date, a review or new submission of the use case will be required. Changes or additional development will also require a review or new use case submission.
   contact:
-    name: gp-connect/appointments-management-fhir API Support
+    name: gp-connect/patient-facing/appointments-management-fhir API Support
     url: https://digital.nhs.uk/developer/help-and-support
     email: api.management@nhs.net
 x-spec-publication:
@@ -192,11 +192,11 @@ x-spec-publication:
 
 servers:
   - description: Sandbox environment.
-    url: https://sandbox.api.service.nhs.uk/gp-connect/appointments-management-fhir/FHIR/STU3/
+    url: https://sandbox.api.service.nhs.uk/gp-connect/patient-facing/appointments-management-fhir/FHIR/STU3/
   - description: Integration test environment.
-    url: https://int.api.service.nhs.uk/gp-connect/appointments-management-fhir/FHIR/STU3/
+    url: https://int.api.service.nhs.uk/gp-connect/patient-facing/appointments-management-fhir/FHIR/STU3/
   - description: Production environment.
-    url: https://api.service.nhs.uk/gp-connect/appointments-management-fhir/FHIR/STU3/
+    url: https://api.service.nhs.uk/gp-connect/patient-facing/appointments-management-fhir/FHIR/STU3/
 
 paths:
   /Slot:
