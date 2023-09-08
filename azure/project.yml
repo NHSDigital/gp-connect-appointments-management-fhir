@@ -1,5 +1,5 @@
 variables:
   service_name: gp-connect-appointments-management-fhir
   short_service_name: gcamf
-  service_base_path: gp-connect-appointments-management-fhir/FHIR/STU3
+  service_base_path: gp-connect/patient-facing/appointments-management-fhir/FHIR/STU3
   pr_number: ${{ split(variables['Build.SourceBranch'], '/')[2] }}
