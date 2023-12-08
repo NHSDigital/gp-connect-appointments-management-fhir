@@ -73,6 +73,8 @@ info:
 
     This API is in [development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
+    It will shortly be moving into the [Booking and Referral Standard (BaRS)](https://digital.nhs.uk/services/booking-and-referral-standard).
+
     ## Service level
 
     This API is a silver service, meaning it is operational 24 hours a day, 365 days a year but only supported during business hours (8am to 6pm), Monday to Friday excluding bank holidays.
