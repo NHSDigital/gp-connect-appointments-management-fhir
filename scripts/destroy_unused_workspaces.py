@@ -22,7 +22,7 @@ def execute_terraform_command(command, cwd=None):
     except Exception as e:
         print(f"Exception executing command: {command}")
         print(f"Exception details: {e}")
-        return 1, None, e
+        return 1, None, str(e)
 
 
 def set_env(aws_profile):
